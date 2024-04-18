@@ -1,3 +1,51 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:@next/next/recommended",
+    "prettier"
+  ],
+  "rules": {
+    // Disable console.log on production
+    "no-console": ["error", { "allow": ["error"] }],
+    // No need to import React when using Next.js
+    "react/react-in-jsx-scope": "off",
+
+    // We will use TypeScript's types for component props instead
+    "react/prop-types": "off",
+    "react/require-default-props": "off",
+
+    // This rule is not compatible with Next.js's <Link /> components
+    "jsx-a11y/anchor-is-valid": "off",
+
+    // To be able to use NextPage type for page component
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "arrow-function" }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never",
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+
+    // Others
+    "import/prefer-default-export": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/media-has-caption": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+  },
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  }
 }
