@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prepare": "husky",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "type:check": "tsc --project tsconfig.json --pretty",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "next": "14.2.1",
