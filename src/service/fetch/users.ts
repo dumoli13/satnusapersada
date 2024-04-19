@@ -5,7 +5,7 @@ import {
   FetchUserDetailResponse,
   FetchUserListRequest,
   FetchUserListResponse,
-} from '@/interface/users';
+} from '@/src/interface/users';
 import fetch from './index';
 
 export async function fetchUsers(payload: FetchUserListRequest) {

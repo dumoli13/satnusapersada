@@ -1,12 +1,13 @@
+import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import Appbar from '../components/Appbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'PT Sat NUSAPERSADA, Tbk',
-  description: 'High Technology Electronics Manufacturer',
+  title: 'title',
+  description: 'descripton',
 };
 
 const RootLayout = ({
@@ -15,7 +16,10 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => (
   <html lang="en">
-    <body className={inter.className}>{children}</body>
+    <body className={inter.className}>
+      <Appbar />
+      {children}
+    </body>
   </html>
 );
 

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext", "es2017"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,8 +19,10 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/styled-system/*": ["styled-system/*"]
     }
   },
   "include": [
@@ -30,6 +32,8 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
+    "**/*.cjs",
+    "**/*.mjs",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]

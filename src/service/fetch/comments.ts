@@ -3,7 +3,7 @@ import {
   FetchCommentListRequest,
   FetchCommentListResponse,
   FetchCreateCommentRequest,
-} from '@/interface/comments';
+} from '@/src/interface/comments';
 import fetch from './index';
 
 export async function fetchCommentList(

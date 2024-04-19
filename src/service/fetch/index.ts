@@ -54,8 +54,6 @@ export default async function apiFetch<Request, Response>({
     }
   }
 
-  console.log('body', body);
-
   const response = await fetch(apiUrl, {
     method,
     headers,
@@ -64,7 +62,6 @@ export default async function apiFetch<Request, Response>({
   });
 
   const data = await response.json();
-  console.log('data', data);
 
   if (!response.ok) {
     return {

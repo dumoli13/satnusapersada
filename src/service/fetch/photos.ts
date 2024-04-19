@@ -5,63 +5,63 @@ import {
   FetchPhotoListRequest,
   FetchPhotoListResponse,
   FetchUpdatePhotoRequest,
-} from "@/interface/photos";
-import fetch from "./index";
+} from '@/src/interface/photos';
+import fetch from './index';
 
 export async function fetchPhotos(payload: FetchPhotoListRequest) {
   return fetch<FetchPhotoListRequest, FetchPhotoListResponse>({
-    url: "/photos",
-    method: "GET",
+    url: '/photos',
+    method: 'GET',
     payload,
-    cache: "no-store",
+    cache: 'no-store',
   });
 }
 
 export async function fetchPhotosDetail(id: string) {
   return fetch<undefined, FetchPhotoDetailResponse>({
     url: `/photos/${id}`,
-    method: "GET",
-    cache: "no-store",
+    method: 'GET',
+    cache: 'no-store',
   });
 }
 
 export async function fetchCreatePhotos(payload: FetchCreatePhotoRequest) {
   return fetch<FetchCreatePhotoRequest, undefined>({
-    url: "/photos",
-    method: "POST",
+    url: '/photos',
+    method: 'POST',
     payload,
-    cache: "no-store",
+    cache: 'no-store',
   });
 }
 
 export async function fetchUpdatePhotos(
   id: string,
-  payload: FetchUpdatePhotoRequest
+  payload: FetchUpdatePhotoRequest,
 ) {
   return fetch<FetchUpdatePhotoRequest, undefined>({
     url: `/photos/${id}`,
-    method: "PUT",
+    method: 'PUT',
     payload,
-    cache: "no-store",
+    cache: 'no-store',
   });
 }
 
 export async function fetchPatchPhotos(
   id: string,
-  payload: FetchPatchPhotoRequest
+  payload: FetchPatchPhotoRequest,
 ) {
   return fetch<FetchPatchPhotoRequest, undefined>({
     url: `/photos/${id}`,
-    method: "PATCH",
+    method: 'PATCH',
     payload,
-    cache: "no-store",
+    cache: 'no-store',
   });
 }
 
 export async function fetchDeletePhotos(id: string) {
   return fetch<undefined, undefined>({
     url: `/photos/${id}`,
-    method: "DELETE",
-    cache: "no-store",
+    method: 'DELETE',
+    cache: 'no-store',
   });
 }
