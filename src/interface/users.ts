@@ -6,7 +6,7 @@ export type FetchUserListRequest = {
   website: string;
 };
 
-export type FetchUserListResponse = Array<{
+export type UserDetail = {
   id: number;
   name: string;
   username: string;
@@ -17,35 +17,11 @@ export type FetchUserListResponse = Array<{
     city: string;
     zipcode: string;
     geo: {
-      lat: string;
-      lng: string;
+      lat: number;
+      lng: number;
     };
   };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-}>;
-
-export type FetchUserDetailResponse = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
+  phone: number;
   website: string;
   company: {
     name: string;
@@ -53,6 +29,8 @@ export type FetchUserDetailResponse = {
     bs: string;
   };
 };
+
+export type FetchUserListResponse = Array<UserDetail>;
 
 export type FetchCreateUserRequest = {
   name: string;
@@ -64,34 +42,11 @@ export type FetchCreateUserRequest = {
     city: string;
     zipcode: string;
     geo: {
-      lat: string;
-      lng: string;
+      lat: number;
+      lng: number;
     };
   };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-};
-
-export type FetchUpdateUserRequest = {
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
+  phone: number;
   website: string;
   company: {
     name: string;
@@ -110,11 +65,11 @@ export type FetchPatchUserRequest = {
     city: string;
     zipcode: string;
     geo: {
-      lat: string;
-      lng: string;
+      lat: number;
+      lng: number;
     };
   };
-  phone?: string;
+  phone?: number;
   website?: string;
   company?: {
     name: string;

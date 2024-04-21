@@ -1,14 +1,13 @@
 import {
   FetchCreateUserRequest,
   FetchPatchUserRequest,
-  FetchUpdateUserRequest,
-  FetchUserDetailResponse,
   FetchUserListRequest,
   FetchUserListResponse,
+  UserDetail,
 } from '@/src/interface/users';
 import fetch from './index';
 
-export async function fetchUsers(payload: FetchUserListRequest) {
+export async function fetchUsers(payload?: FetchUserListRequest) {
   return fetch<FetchUserListRequest, FetchUserListResponse>({
     url: '/users',
     method: 'GET',
@@ -18,7 +17,7 @@ export async function fetchUsers(payload: FetchUserListRequest) {
 }
 
 export async function fetchUserDetail(id: string) {
-  return fetch<undefined, FetchUserDetailResponse>({
+  return fetch<undefined, UserDetail>({
     url: `/users/${id}`,
     method: 'GET',
     cache: 'no-store',
@@ -35,10 +34,10 @@ export async function fetchCreateUser(payload: FetchCreateUserRequest) {
 }
 
 export async function fetchUpdateUser(
-  id: string,
-  payload: FetchUpdateUserRequest,
+  id: number,
+  payload: FetchCreateUserRequest,
 ) {
-  return fetch<FetchUpdateUserRequest, undefined>({
+  return fetch<FetchCreateUserRequest, undefined>({
     url: `/users/${id}`,
     method: 'PUT',
     payload,
@@ -47,7 +46,7 @@ export async function fetchUpdateUser(
 }
 
 export async function fetchPatchUser(
-  id: string,
+  id: number,
   payload: FetchPatchUserRequest,
 ) {
   return fetch<FetchPatchUserRequest, undefined>({
@@ -58,7 +57,7 @@ export async function fetchPatchUser(
   });
 }
 
-export async function fetchDeleteUser(id: string) {
+export async function fetchDeleteUser(id: number) {
   return fetch<undefined, undefined>({
     url: `/users/${id}`,
     method: 'DELETE',

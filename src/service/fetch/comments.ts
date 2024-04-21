@@ -6,10 +6,7 @@ import {
 } from '@/src/interface/comments';
 import fetch from './index';
 
-export async function fetchCommentList(
-  id: string,
-  payload: FetchCommentListRequest,
-) {
+export async function fetchCommentList(payload?: FetchCommentListRequest) {
   return fetch<FetchCommentListRequest, FetchCommentListResponse>({
     url: `/comments`,
     method: 'GET',

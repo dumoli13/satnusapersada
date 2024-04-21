@@ -8,7 +8,7 @@ import {
 } from '@/src/interface/todos';
 import fetch from './index';
 
-export async function fetchTodos(payload: FetchTodoListRequest) {
+export async function fetchTodos(payload?: FetchTodoListRequest) {
   return fetch<FetchTodoListRequest, FetchTodoListResponse>({
     url: '/todos',
     method: 'GET',

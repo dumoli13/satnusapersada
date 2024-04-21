@@ -8,7 +8,7 @@ import {
 } from '@/src/interface/albums';
 import fetch from './index';
 
-export async function fetchAlbums(payload: FetchAlbumListRequest) {
+export async function fetchAlbums(payload?: FetchAlbumListRequest) {
   return fetch<FetchAlbumListRequest, FetchAlbumListResponse>({
     url: '/albums',
     method: 'GET',

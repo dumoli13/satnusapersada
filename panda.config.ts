@@ -259,11 +259,16 @@ export const preset = definePreset({
         '6xl': { value: '4rem' }, // 64px
         '7xl': { value: '5rem' }, // 80px
         '8xl': { value: '6rem' }, // 96px
-        '9/10': { value: '90%' },
         'max-content': { value: 'max-content' },
+        '9/10': { value: '90%' },
+        '1/4': { value: '25%' },
+        '1/2': { value: '50%' },
         full: { value: '100%' },
+        '50vh': { value: '50vh' },
+        '50vw': { value: '50vw' },
         '100vh': { value: '100vh' },
         '100vw': { value: '100vw' },
+        'modal-width': { value: '600px' },
         'desktop-container': { value: '1280px' },
       },
       radii: {
@@ -281,16 +286,19 @@ export const preset = definePreset({
         hidden: { value: 0 },
       },
       shadows: {
-        xs: { value: '0px 16px 12px rgba(137, 154, 183, 0.08)' },
-        small: { value: '0px 12px 20px rgba(6, 59, 148, 0.08)' },
-        base: { value: '0px 8px 12px rgba(13, 99, 243, 0.2)' },
-        large: { value: '0px 12px 16px rgba(13, 99, 243, 0.2)' },
-        xl: { value: '0px 16px 25px rgba(11, 84, 247, 0.24)' },
-        xsTop: { value: '0px -16px 12px rgba(137, 154, 183, 0.08)' },
-        smallTop: { value: '0px -12px 20px rgba(6, 59, 148, 0.08)' },
-        baseTop: { value: '0px -8px 12px rgba(13, 99, 243, 0.2)' },
-        largeTop: { value: '0px -12px 16px rgba(13, 99, 243, 0.2)' },
-        xlTop: { value: '0px -16px 25px rgba(11, 84, 247, 0.24)' },
+        default: {
+          value:
+            '0px 1px 1px rgba(81, 113, 145, 0.08), 0px 2px 1px rgba(81, 113, 145, 0.07), 0px 1px 7px rgba(81, 113, 145, 0.14)',
+        },
+        sticky: {
+          value:
+            '0px 0px 1px rgba(81, 113, 145, 0.48), 0px 2px 11px rgba(81, 113, 145, 0.1)',
+        },
+        float: {
+          value:
+            '0px 0px 1px rgba(81, 113, 145, 0.48), 0px 0px 56px rgba(81, 113, 145, 0.08), 0px 14px 42px rgba(81, 113, 145, 0.16)',
+        },
+        high: { value: '0px 2px 22px 3px rgba(86, 110, 143, 0.1)' },
       },
       fontSizes: {
         '2xs': { value: '0.625rem' }, // 10px
@@ -345,6 +353,17 @@ export const preset = definePreset({
       durations: {
         fast: { value: '200ms' },
         medium: { value: '300ms' },
+      },
+      borders: {
+        none: { value: 'none' },
+        primary: { value: '1px solid {colors.primary.30}' },
+        secondary: { value: '1px solid {colors.secondary.30}' },
+        success: { value: '1px solid {colors.success.30}' },
+        info: { value: '1px solid {colors.info.30}' },
+        error: { value: '1px solid {colors.error.30}' },
+        warning: { value: '1px solid {colors.warning.30}' },
+        neutral: { value: '1px solid {colors.line.primary}' },
+        disabled: { value: '1px solid {colors.line.secondary}' },
       },
     },
     textStyles: {

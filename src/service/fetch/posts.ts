@@ -11,7 +11,7 @@ import {
 } from '@/src/interface/posts';
 import fetch from './index';
 
-export async function fetchPosts(payload: FetchPostListRequest) {
+export async function fetchPosts(payload?: FetchPostListRequest) {
   return fetch<FetchPostListRequest, FetchPostListResponse>({
     url: '/posts',
     method: 'GET',
