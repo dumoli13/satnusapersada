@@ -2,10 +2,9 @@ import { ReactNode } from 'react';
 
 type RuleRequired = 'required';
 type RuleEmail = 'email';
-type RuleMobileNumber = 'mobile-number';
 type RuleUrl = 'url';
 
-export type Rule = RuleRequired | RuleEmail | RuleMobileNumber | RuleUrl;
+export type Rule = RuleRequired | RuleEmail | RuleUrl;
 
 type Key<T> = T extends `${infer K}|${string}` ? K : T;
 type RuleKey = Key<Rule>;
@@ -60,12 +59,6 @@ export async function validate<T>({
         ? regex.test(value)
         : true;
     }
-    case 'mobile-number': {
-      const regex = /^[\d]{0,15}$/;
-      return typeof value === 'string' && value.length > 0
-        ? regex.test(value)
-        : true;
-    }
     case 'url': {
       const regex =
         /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*)$/;
@@ -86,8 +79,6 @@ export function getErrorMessage(rule: Rule): string {
       return 'Field is required';
     case 'email':
       return 'Invalid email';
-    case 'mobile-number':
-      return 'Invalid mobile number';
     case 'url':
       return 'Invalid URL';
     default:

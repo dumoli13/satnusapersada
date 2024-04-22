@@ -45,13 +45,13 @@ const styles = {
   tag: css({
     display: 'flex',
     alignItems: 'center',
-    gap: '4xs',
+    gap: '5xs',
     borderRadius: 'base',
     background: 'light.background.50',
     width: 'max-content',
     px: '3xs',
     py: '5xs',
-    fontSize: 'small',
+    fontSize: 'xs',
   }),
 };
 
@@ -80,12 +80,12 @@ const CardUser = ({ id, name, phone, email, company }: UserDetail) => {
         <div className={styles.tag}>
           <LocalPhoneIcon
             color="action"
-            sx={{ width: '20px', height: '20px' }}
+            sx={{ width: '16px', height: '16px' }}
           />
           {phone}
         </div>
         <div className={styles.tag}>
-          <MailIcon color="secondary" sx={{ width: '20px', height: '20px' }} />
+          <MailIcon color="secondary" sx={{ width: '16px', height: '16px' }} />
           {email.toLocaleLowerCase()}
         </div>
       </div>

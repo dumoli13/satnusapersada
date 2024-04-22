@@ -50,7 +50,7 @@ const styles = {
 const FormUser = ({ data, onClose }: Properties) => {
   const inputFullNameRef = useRef<InputTextFieldRef>(null);
   const inpuEmailRef = useRef<InputTextFieldRef>(null);
-  const inputPhoneRef = useRef<InputNumberFieldRef>(null);
+  const inputPhoneRef = useRef<InputTextFieldRef>(null);
   const inputWebsiteRef = useRef<InputTextFieldRef>(null);
   const inputUsernameRef = useRef<InputTextFieldRef>(null);
   const inputCompanynameRef = useRef<InputTextFieldRef>(null);
@@ -131,6 +131,8 @@ const FormUser = ({ data, onClose }: Properties) => {
         }
       }
       setLoading(true);
+    } else {
+      setSnacbarFailedDelete('Please check form that you have entered ');
     }
   };
 
@@ -154,13 +156,13 @@ const FormUser = ({ data, onClose }: Properties) => {
             inputRef={inpuEmailRef}
             rules={['required', 'email']}
           />
-          <SNNumberField
+          <SNTextField
             id="phone"
             label="Phone"
-            placeholder="Enter Phone"
+            placeholder="Enter Phone Number"
             defaultValue={data?.phone}
             inputRef={inputPhoneRef}
-            rules={['required', 'mobile-number']}
+            rules="required"
           />
         </div>
         <div className={styles.halfField}>

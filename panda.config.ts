@@ -259,6 +259,18 @@ export const preset = definePreset({
         '6xl': { value: '4rem' }, // 64px
         '7xl': { value: '5rem' }, // 80px
         '8xl': { value: '6rem' }, // 96px
+        '9xl': { value: '8rem' }, // 128px
+        '10xl': { value: '9rem' }, // 144px
+        '11xl': { value: '10rem' }, // 160px
+        '12xl': { value: '11rem' }, // 176px
+        '13xl': { value: '12rem' }, // 192px
+        '14xl': { value: '13rem' }, // 208px
+        '15xl': { value: '14rem' }, // 224px
+        '16xl': { value: '15rem' }, // 240px
+        '17xl': { value: '16rem' }, // 256px
+        '18xl': { value: '18rem' }, // 288px
+        '19xl': { value: '20rem' }, // 320px
+        '20xl': { value: '24rem' }, // 384px
         'max-content': { value: 'max-content' },
         '9/10': { value: '90%' },
         '1/4': { value: '25%' },

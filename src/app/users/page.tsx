@@ -7,6 +7,7 @@ import CardUser from './components/CardUser';
 import ButtonAdd from './components/ButtonAdd';
 import DrawerUserDetail from './components/DrawerUserDetail';
 import { UserDetail } from '@/src/interface/users';
+import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 
 const styles = {
   headerContainer: css({
@@ -32,7 +33,9 @@ const UsersPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const response = await fetchUsers();
+  const response = await fetchUsers({
+    name: searchParams.q,
+  });
 
   let userDetail: UserDetail | null = null;
   if (searchParams.id) {
@@ -48,6 +51,7 @@ const UsersPage = async ({
         <>
           <div className={styles.headerContainer}>
             <ButtonAdd />
+            <FilterSearchQuery placeholder="Search User" />
           </div>
           <div className={styles.cardContainer}>
             {response.data.map((item, index) => (

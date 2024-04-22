@@ -1,9 +1,9 @@
 export type FetchUserListRequest = {
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
+  name?: string;
+  username?: string;
+  email?: string;
+  phone?: string;
+  website?: string;
 };
 
 export type UserDetail = {
@@ -21,7 +21,7 @@ export type UserDetail = {
       lng: number;
     };
   };
-  phone: number;
+  phone: string;
   website: string;
   company: {
     name: string;
@@ -46,7 +46,7 @@ export type FetchCreateUserRequest = {
       lng: number;
     };
   };
-  phone: number;
+  phone: string;
   website: string;
   company: {
     name: string;
@@ -69,7 +69,7 @@ export type FetchPatchUserRequest = {
       lng: number;
     };
   };
-  phone?: number;
+  phone?: string;
   website?: string;
   company?: {
     name: string;
