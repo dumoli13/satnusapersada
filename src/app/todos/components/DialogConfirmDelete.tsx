@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { css } from '@/styled-system/css';
 import DialogHeader from '@/src/components/DialogHeader';
 import ModalLoading from '@/src/components/ModalLoading';
-import { fetchDeleteUser } from '@/src/service/fetch/users';
+import { fetchDeleteTodos } from '@/src/service/fetch/todos';
 
 interface Properties {
   open: boolean;
@@ -36,7 +36,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    const response = await fetchDeleteUser(id);
+    const response = await fetchDeleteTodos(id);
     setLoading(false);
     if (response.success) {
       onSuccess();
@@ -46,11 +46,11 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
     }
   };
   return (
-    <Dialog open={open} onClose={onClose} fullScreen>
-      <DialogHeader title="delete user" onClose={onClose} />
+    <Dialog open={open} onClose={onClose} fullWidth>
+      <DialogHeader title="delete todo" onClose={onClose} />
       <div className={styles.root}>
         <p className={styles.description}>
-          Are you sure want to delete this user?{' '}
+          Are you sure want to delete this todo?{' '}
         </p>
         <div className={styles.ctaContainer}>
           <Button fullWidth variant="contained" onClick={onClose}>
@@ -67,7 +67,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
         open={snackbarSuccess}
         autoHideDuration={6000}
         onClose={() => setSnacbarSuccess(false)}
-        message="User has been deleted successfully"
+        message="Todo has been deleted successfully"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
       <Snackbar
@@ -81,7 +81,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
           variant="filled"
           sx={{ width: '100%' }}
         >
-          Error while deleting user
+          Error while deleting todo
         </Alert>
       </Snackbar>
     </Dialog>

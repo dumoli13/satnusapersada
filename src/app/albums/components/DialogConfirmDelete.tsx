@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { css } from '@/styled-system/css';
 import DialogHeader from '@/src/components/DialogHeader';
 import ModalLoading from '@/src/components/ModalLoading';
-import { fetchDeleteUser } from '@/src/service/fetch/users';
+import { fetchDeleteAlbum } from '@/src/service/fetch/albums';
 
 interface Properties {
   open: boolean;
@@ -29,6 +29,7 @@ const styles = {
     gap: 'base',
   }),
 };
+
 const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
   const [loading, setLoading] = useState(false);
   const [snackbarSuccess, setSnacbarSuccess] = useState(false);
@@ -36,7 +37,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    const response = await fetchDeleteUser(id);
+    const response = await fetchDeleteAlbum(id);
     setLoading(false);
     if (response.success) {
       onSuccess();
@@ -47,10 +48,10 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
   };
   return (
     <Dialog open={open} onClose={onClose} fullScreen>
-      <DialogHeader title="delete user" onClose={onClose} />
+      <DialogHeader title="delete album" onClose={onClose} />
       <div className={styles.root}>
         <p className={styles.description}>
-          Are you sure want to delete this user?{' '}
+          Are you sure want to delete this album?{' '}
         </p>
         <div className={styles.ctaContainer}>
           <Button fullWidth variant="contained" onClick={onClose}>
@@ -67,7 +68,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
         open={snackbarSuccess}
         autoHideDuration={6000}
         onClose={() => setSnacbarSuccess(false)}
-        message="User has been deleted successfully"
+        message="Album has been deleted successfully"
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
       <Snackbar
@@ -81,7 +82,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
           variant="filled"
           sx={{ width: '100%' }}
         >
-          Error while deleting user
+          Error while deleting album
         </Alert>
       </Snackbar>
     </Dialog>

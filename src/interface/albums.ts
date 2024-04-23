@@ -4,32 +4,15 @@ export type FetchAlbumListRequest = {
   title?: string;
 };
 
-export type FetchAlbumListResponse = Array<{
-  userId: string;
-  id: string;
-  title: string;
-}>;
-
-export type FetchAlbumDetailResponse = {
-  userId: string;
-  id: string;
+export type AlbumDetail = {
+  userId: number;
+  id: number;
   title: string;
 };
+
+export type FetchAlbumListResponse = Array<AlbumDetail>;
 
 export type FetchCreateAlbumRequest = {
-  userId: string;
+  userId: number;
   title: string;
-  body: string;
-};
-
-export type FetchUpdateAlbumRequest = {
-  userId: string;
-  title: string;
-  body: string;
-};
-
-export type FetchPatchAlbumRequest = {
-  userId?: string;
-  title?: string;
-  body?: string;
 };

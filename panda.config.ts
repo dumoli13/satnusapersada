@@ -272,6 +272,7 @@ export const preset = definePreset({
         '19xl': { value: '20rem' }, // 320px
         '20xl': { value: '24rem' }, // 384px
         'max-content': { value: 'max-content' },
+        'fit-content': { value: 'fit-content' },
         '9/10': { value: '90%' },
         '1/4': { value: '25%' },
         '1/2': { value: '50%' },
@@ -368,12 +369,12 @@ export const preset = definePreset({
       },
       borders: {
         none: { value: 'none' },
-        primary: { value: '1px solid {colors.primary.30}' },
-        secondary: { value: '1px solid {colors.secondary.30}' },
-        success: { value: '1px solid {colors.success.30}' },
-        info: { value: '1px solid {colors.info.30}' },
-        error: { value: '1px solid {colors.error.30}' },
-        warning: { value: '1px solid {colors.warning.30}' },
+        primary: { value: '1px solid {colors.primary.40}' },
+        secondary: { value: '1px solid {colors.secondary.40}' },
+        success: { value: '1px solid {colors.success.40}' },
+        info: { value: '1px solid {colors.info.40}' },
+        error: { value: '1px solid {colors.error.40}' },
+        warning: { value: '1px solid {colors.warning.40}' },
         neutral: { value: '1px solid {colors.line.primary}' },
         disabled: { value: '1px solid {colors.line.secondary}' },
       },
@@ -400,11 +401,44 @@ export const preset = definePreset({
       xl: '1280px',
       '2xl': '1536px',
     },
+
     keyframes: {
       skeleton: {
         '0%': { backgroundColor: '#c8c8c8' },
         '50%': { backgroundColor: '#eff0f6' },
         '100%': { backgroundColor: '#c8c8c8' },
+      },
+    },
+  },
+  patterns: {
+    extend: {
+      scrollable: {
+        defaultValues: {
+          direction: 'vertical',
+          hideScrollbar: true,
+        },
+        properties: {
+          // The direction of the scroll
+          direction: { type: 'enum', value: ['horizontal', 'vertical'] },
+          // Whether to hide the scrollbar
+          hideScrollbar: { type: 'boolean' },
+        },
+        // disallow the `overflow` property (in TypeScript)
+        blocklist: ['overflow'],
+        transform(props) {
+          const { direction, hideScrollbar, ...rest } = props;
+          return {
+            overflow: 'auto',
+            height: direction === 'horizontal' ? '100%' : 'auto',
+            width: direction === 'vertical' ? '100%' : 'auto',
+            scrollbarWidth: hideScrollbar ? 'none' : 'auto',
+            WebkitOverflowScrolling: 'touch',
+            '&::-webkit-scrollbar': {
+              display: hideScrollbar ? 'none' : 'auto',
+            },
+            ...rest,
+          };
+        },
       },
     },
   },

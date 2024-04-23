@@ -1,10 +1,8 @@
 import {
   FetchCreatePhotoRequest,
-  FetchPatchPhotoRequest,
-  FetchPhotoDetailResponse,
   FetchPhotoListRequest,
   FetchPhotoListResponse,
-  FetchUpdatePhotoRequest,
+  PhotoDetail,
 } from '@/src/interface/photos';
 import fetch from './index';
 
@@ -18,7 +16,7 @@ export async function fetchPhotos(payload?: FetchPhotoListRequest) {
 }
 
 export async function fetchPhotosDetail(id: string) {
-  return fetch<undefined, FetchPhotoDetailResponse>({
+  return fetch<undefined, PhotoDetail>({
     url: `/photos/${id}`,
     method: 'GET',
     cache: 'no-store',
@@ -36,23 +34,11 @@ export async function fetchCreatePhotos(payload: FetchCreatePhotoRequest) {
 
 export async function fetchUpdatePhotos(
   id: string,
-  payload: FetchUpdatePhotoRequest,
+  payload: FetchCreatePhotoRequest,
 ) {
-  return fetch<FetchUpdatePhotoRequest, undefined>({
+  return fetch<FetchCreatePhotoRequest, undefined>({
     url: `/photos/${id}`,
     method: 'PUT',
-    payload,
-    cache: 'no-store',
-  });
-}
-
-export async function fetchPatchPhotos(
-  id: string,
-  payload: FetchPatchPhotoRequest,
-) {
-  return fetch<FetchPatchPhotoRequest, undefined>({
-    url: `/photos/${id}`,
-    method: 'PATCH',
     payload,
     cache: 'no-store',
   });

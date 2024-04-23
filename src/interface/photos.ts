@@ -4,36 +4,17 @@ export type FetchPhotoListRequest = {
   title?: string;
 };
 
-export type FetchPhotoListResponse = Array<{
-  albumId: string;
-  id: string;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}>;
-
-export type FetchPhotoDetailResponse = {
-  albumId: string;
-  id: string;
+export type PhotoDetail = {
+  albumId: number;
+  id: number;
   title: string;
   url: string;
   thumbnailUrl: string;
 };
+export type FetchPhotoListResponse = Array<PhotoDetail>;
 
 export type FetchCreatePhotoRequest = {
-  userId: string;
+  albumId: number;
   title: string;
   body: string;
-};
-
-export type FetchUpdatePhotoRequest = {
-  userId: string;
-  title: string;
-  body: string;
-};
-
-export type FetchPatchPhotoRequest = {
-  userId?: string;
-  title?: string;
-  body?: string;
 };

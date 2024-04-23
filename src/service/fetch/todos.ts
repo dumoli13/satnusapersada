@@ -4,7 +4,6 @@ import {
   FetchTodoDetailResponse,
   FetchTodoListRequest,
   FetchTodoListResponse,
-  FetchUpdateTodoRequest,
 } from '@/src/interface/todos';
 import fetch from './index';
 
@@ -17,7 +16,7 @@ export async function fetchTodos(payload?: FetchTodoListRequest) {
   });
 }
 
-export async function fetchTodosDetail(id: string) {
+export async function fetchTodosDetail(id: number) {
   return fetch<undefined, FetchTodoDetailResponse>({
     url: `/todos/${id}`,
     method: 'GET',
@@ -35,10 +34,10 @@ export async function fetchCreateTodos(payload: FetchCreateTodoRequest) {
 }
 
 export async function fetchUpdateTodos(
-  id: string,
-  payload: FetchUpdateTodoRequest,
+  id: number,
+  payload: FetchCreateTodoRequest,
 ) {
-  return fetch<FetchUpdateTodoRequest, undefined>({
+  return fetch<FetchCreateTodoRequest, undefined>({
     url: `/todos/${id}`,
     method: 'PUT',
     payload,
@@ -47,7 +46,7 @@ export async function fetchUpdateTodos(
 }
 
 export async function fetchPatchTodos(
-  id: string,
+  id: number,
   payload: FetchPatchTodoRequest,
 ) {
   return fetch<FetchPatchTodoRequest, undefined>({
@@ -58,7 +57,7 @@ export async function fetchPatchTodos(
   });
 }
 
-export async function fetchDeleteTodos(id: string) {
+export async function fetchDeleteTodos(id: number) {
   return fetch<undefined, undefined>({
     url: `/todos/${id}`,
     method: 'DELETE',

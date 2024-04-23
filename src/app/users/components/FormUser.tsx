@@ -64,12 +64,8 @@ const FormUser = ({ data, onClose }: Properties) => {
   const inputAddressLngRef = useRef<InputNumberFieldRef>(null);
 
   const [loading, setLoading] = useState(false);
-  const [snackbarSuccessDelete, setSnacbarSuccessDelete] = useState<
-    string | null
-  >(null);
-  const [snackbarFailedDelete, setSnacbarFailedDelete] = useState<
-    string | null
-  >(null);
+  const [snackbarSuccess, setSnacbarSuccess] = useState<string | null>(null);
+  const [snackbarFailed, setSnacbarFailed] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     if (
@@ -116,23 +112,23 @@ const FormUser = ({ data, onClose }: Properties) => {
       if (data) {
         const response = await fetchUpdateUser(data.id, payload);
         if (response.success) {
-          setSnacbarSuccessDelete('User has been updated successfully');
+          setSnacbarSuccess('User has been updated successfully');
           onClose();
         } else {
-          setSnacbarFailedDelete('Error While updating user data');
+          setSnacbarFailed('Error While updating user data');
         }
       } else {
         const response = await fetchCreateUser(payload);
         if (response.success) {
-          setSnacbarSuccessDelete('New user has been create successfully');
+          setSnacbarSuccess('New user has been create successfully');
           onClose();
         } else {
-          setSnacbarFailedDelete('Error While create new user ');
+          setSnacbarFailed('Error While create new user ');
         }
       }
       setLoading(true);
     } else {
-      setSnacbarFailedDelete('Please check form that you have entered ');
+      setSnacbarFailed('Please check form that you have entered ');
     }
   };
 
@@ -280,24 +276,24 @@ const FormUser = ({ data, onClose }: Properties) => {
 
       <ModalLoading open={loading} />
       <Snackbar
-        open={snackbarSuccessDelete !== null}
+        open={snackbarSuccess !== null}
         autoHideDuration={6000}
-        onClose={() => setSnacbarSuccessDelete(null)}
-        message="User has been deleted successfully"
+        onClose={() => setSnacbarSuccess(null)}
+        message={snackbarSuccess}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       />
       <Snackbar
-        open={snackbarFailedDelete !== null}
+        open={snackbarFailed !== null}
         autoHideDuration={3000}
-        onClose={() => setSnacbarFailedDelete(null)}
+        onClose={() => setSnacbarFailed(null)}
       >
         <Alert
-          onClose={() => setSnacbarFailedDelete(null)}
+          onClose={() => setSnacbarFailed(null)}
           severity="error"
           variant="filled"
           sx={{ width: '100%' }}
         >
-          Error while deleting user
+          {snackbarFailed}
         </Alert>
       </Snackbar>
     </div>

@@ -23,7 +23,7 @@ export async function fetchCommentDetail(id: string) {
   });
 }
 
-export async function fetchCreateTodos(payload: FetchCreateCommentRequest) {
+export async function fetchCreateComment(payload: FetchCreateCommentRequest) {
   return fetch<FetchCreateCommentRequest, undefined>({
     url: '/comments',
     method: 'POST',

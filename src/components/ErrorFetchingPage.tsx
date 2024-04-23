@@ -8,19 +8,11 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
   }),
-  icon: css({
-    color: 'error.30',
-  }),
 };
 const ErrorFetchingPage = () => (
   <div className={styles.root}>
     <EmptyList
-      icon={
-        <HighlightOffIcon
-          sx={{ width: 250, height: 250 }}
-          className={styles.icon}
-        />
-      }
+      icon={<HighlightOffIcon sx={{ width: 250, height: 250 }} color="error" />}
       title="Error While Fetching Data"
       description="Please try again later"
     />

@@ -3,9 +3,12 @@ import { css } from '@/styled-system/css';
 
 const styles = {
   root: css({
-    padding: 'xl',
+    padding: 'base',
     mx: 'auto',
     maxWidth: 'desktop-container',
+    xl: {
+      padding: 'xl',
+    },
   }),
 };
 

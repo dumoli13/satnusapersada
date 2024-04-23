@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 type RuleRequired = 'required';
 type RuleEmail = 'email';
 type RuleUrl = 'url';
@@ -10,25 +8,9 @@ type Key<T> = T extends `${infer K}|${string}` ? K : T;
 type RuleKey = Key<Rule>;
 
 export type InputSelectOption = {
-  id: string;
+  id: number;
   label: string;
-  icon?: ReactNode;
 };
-export type InputRadioOption = {
-  id: string | number | boolean;
-  label: string;
-  icon?: ReactNode;
-};
-export interface TaskOptionProps {
-  id: string;
-  label: string;
-  number: string;
-}
-export interface ReasonOptionProps {
-  id: string;
-  label: string;
-  reason: string;
-}
 
 export type Value<T> =
   // | string

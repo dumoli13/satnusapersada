@@ -1,10 +1,8 @@
 import {
-  FetchAlbumDetailResponse,
+  AlbumDetail,
   FetchAlbumListRequest,
   FetchAlbumListResponse,
   FetchCreateAlbumRequest,
-  FetchPatchAlbumRequest,
-  FetchUpdateAlbumRequest,
 } from '@/src/interface/albums';
 import fetch from './index';
 
@@ -18,7 +16,7 @@ export async function fetchAlbums(payload?: FetchAlbumListRequest) {
 }
 
 export async function fetchAlbumDetail(id: string) {
-  return fetch<undefined, FetchAlbumDetailResponse>({
+  return fetch<undefined, AlbumDetail>({
     url: `/albums/${id}`,
     method: 'GET',
     cache: 'no-store',
@@ -35,10 +33,10 @@ export async function fetchCreateAlbum(payload: FetchCreateAlbumRequest) {
 }
 
 export async function fetchUpdateAlbum(
-  id: string,
-  payload: FetchUpdateAlbumRequest,
+  id: number,
+  payload: FetchCreateAlbumRequest,
 ) {
-  return fetch<FetchUpdateAlbumRequest, null>({
+  return fetch<FetchCreateAlbumRequest, null>({
     url: `/albums/${id}`,
     method: 'PUT',
     payload,
@@ -46,20 +44,8 @@ export async function fetchUpdateAlbum(
   });
 }
 
-export async function fetchPatchAlbum(
-  id: string,
-  payload: FetchPatchAlbumRequest,
-) {
-  return fetch<FetchPatchAlbumRequest, null>({
-    url: `/albums/${id}`,
-    method: 'PATCH',
-    payload,
-    cache: 'no-store',
-  });
-}
-
-export async function fetchDeleteAlbum(id: string) {
-  return fetch<FetchPatchAlbumRequest, null>({
+export async function fetchDeleteAlbum(id: number) {
+  return fetch<undefined, null>({
     url: `/albums/${id}`,
     method: 'DELETE',
     cache: 'no-store',

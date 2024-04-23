@@ -1,3 +1,10 @@
+export type TodoDetail = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
+
 export type FetchTodoListRequest = {
   userId?: string;
   id?: string;
@@ -5,28 +12,14 @@ export type FetchTodoListRequest = {
   completed?: boolean;
 };
 
-export type FetchTodoListResponse = Array<{
-  userId: string;
-  id: string;
-  title: string;
-  completed: boolean;
-}>;
+export type FetchTodoListResponse = Array<TodoDetail>;
 
-export type FetchTodoDetailResponse = {
-  userId: string;
-  id: string;
-  title: string;
-  completed: boolean;
-};
+export type FetchTodoDetailResponse = TodoDetail;
 
 export type FetchCreateTodoRequest = {
-  userId: string;
+  userId: number;
   title: string;
-};
-
-export type FetchUpdateTodoRequest = {
-  userId: string;
-  title: string;
+  completed: boolean;
 };
 
 export type FetchPatchTodoRequest = {
