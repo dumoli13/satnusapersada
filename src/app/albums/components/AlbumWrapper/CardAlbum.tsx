@@ -1,8 +1,8 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import Image from 'next/image';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { css } from '@/styled-system/css';
 import { AlbumDetail } from '@/src/interface/albums';
 import { createQueryString } from '@/src/lib/misc';

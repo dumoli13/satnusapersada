@@ -93,6 +93,7 @@ const FormComment = ({ id }: Properties) => {
   return (
     <div>
       <div className={styles.container}>
+        <p className={styles.containerTitle}>Add Comment</p>
         <SNTextField
           id="email"
           label="Email"

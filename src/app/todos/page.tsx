@@ -5,13 +5,11 @@ import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUsers } from '@/src/service/fetch/users';
 import { css } from '@/styled-system/css';
-import CardTodo from './components/CardTodo';
 import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import { fetchTodos } from '@/src/service/fetch/todos';
 import EmptyList from '@/src/components/EmptyList';
-import ListUser from './components/ListUser';
-import TodoChart from './components/TodoChart';
+import TodoWrapper from './components/TodoWrapper';
 
 const styles = {
   headerContainer: css({
@@ -23,18 +21,8 @@ const styles = {
       marginBottom: 'xl',
     },
   }),
-  cardContainer: css({
-    display: 'grid',
-    gap: 'base',
-    gridTemplateColumns: '1',
-    md: {
-      gridTemplateColumns: '2',
-    },
-    lg: {
-      gridTemplateColumns: '3',
-    },
-  }),
 };
+
 const TodosPage = async ({
   searchParams,
 }: {
@@ -51,9 +39,9 @@ const TodosPage = async ({
 
   if (todoResponse.success && userListResponse.success) {
     const todoList = todoResponse.data;
-    const todoListFiltered = todoList.filter((item) =>
-      userId ? item.userId.toString() === userId : true,
-    );
+    const todoListFiltered = todoList
+      .filter((item) => (userId ? item.userId.toString() === userId : true))
+      .sort((a, b) => Number(a.completed) - Number(b.completed));
 
     return (
       <Layout>
@@ -61,25 +49,11 @@ const TodosPage = async ({
           <ButtonAdd userList={userListResponse.data} />
           <FilterSearchQuery placeholder="Search Todo" />
         </div>
-        <TodoChart
-          todoList={todoListFiltered}
-          userList={userListResponse.data}
-        />
         {todoList.length > 0 && (
-          <>
-            <ListUser userList={userListResponse.data} />
-            <div className={styles.cardContainer}>
-              {todoListFiltered
-                .sort((a, b) => Number(a.completed) - Number(b.completed))
-                .map((item, index) => (
-                  <CardTodo
-                    key={index}
-                    data={item}
-                    userList={userListResponse.data}
-                  />
-                ))}
-            </div>
-          </>
+          <TodoWrapper
+            data={todoListFiltered}
+            userList={userListResponse.data}
+          />
         )}
         {todoList.length === 0 && searchParams.q && (
           <EmptyList

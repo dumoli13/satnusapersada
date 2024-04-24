@@ -33,33 +33,8 @@ const styles = {
     columnGap: '2xl',
     overflowY: 'auto',
   }),
-  card: css({
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'small',
-    padding: 'base',
-    marginBottom: '2xl',
-    borderY: 'info',
-    breakInside: 'avoid',
-    _hover: {
-      background: 'info.10',
-    },
-  }),
-  cardTitle: css({
-    fontSize: 'base',
-    fontWeight: 'semibold',
-    color: 'light.foreground.70',
-  }),
-  cardBody: css({
-    fontSize: 'small',
-    color: 'light.foreground.70',
-  }),
-  cardAuthor: css({
-    fontSize: 'xs',
-    color: 'light.foreground.60',
-  }),
 };
+
 const HomePage = async ({
   searchParams,
 }: {

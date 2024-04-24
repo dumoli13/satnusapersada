@@ -5,7 +5,6 @@ import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUsers } from '@/src/service/fetch/users';
 import { css } from '@/styled-system/css';
-import CardAlbum from './components/CardAlbum';
 import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import EmptyList from '@/src/components/EmptyList';
@@ -14,6 +13,7 @@ import { fetchAlbumDetail, fetchAlbums } from '@/src/service/fetch/albums';
 import { fetchPhotos } from '@/src/service/fetch/photos';
 import { AlbumDetail } from '@/src/interface/albums';
 import DrawerAlbumDetail from './components/DrawerAlbumDetail';
+import AlbumWrapper from './components/AlbumWrapper';
 
 const styles = {
   headerContainer: css({
@@ -71,21 +71,11 @@ const AlbumsPage = async ({
           {responseAlbum.data.length > 0 && (
             <>
               <ListUser userList={userListResponse.data} />
-              <div className={styles.cardContainer}>
-                {responseAlbum.data
-                  .filter((item) =>
-                    userId ? item.userId.toString() === userId : true,
-                  )
-                  .map((item, index) => (
-                    <CardAlbum
-                      key={index}
-                      data={item}
-                      photos={responsePhoto.data.filter(
-                        (photo) => item.id === photo.albumId,
-                      )}
-                    />
-                  ))}
-              </div>
+              <AlbumWrapper
+                data={responseAlbum.data}
+                photos={responsePhoto.data}
+                userId={userId}
+              />
             </>
           )}
           {responseAlbum.data.length === 0 && searchParams.q && (

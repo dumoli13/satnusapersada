@@ -1,17 +1,15 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
 import { Avatar, Chip, IconButton } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import { css, cva } from '@/styled-system/css';
 import { TodoDetail } from '@/src/interface/todos';
 import { UserDetail } from '@/src/interface/users';
 import { fetchPatchTodo } from '@/src/service/fetch/todos';
-import DialogConfirmDelete from './DialogConfirmDelete';
-import DialogFormTodo from './DialogFormTodo';
+import DialogFormTodo from '../DialogFormTodo';
+import DialogConfirmDelete from '../DialogConfirmDelete';
 
 interface Properties {
   data: TodoDetail;
@@ -99,6 +97,7 @@ const styles = {
 const CardTodo = ({ data, userList }: Properties) => {
   const router = useRouter();
   const selectedUser = userList.find((item) => item.id === data.userId);
+
   const [modalEdit, showModalEdit] = useState(false);
   const [modalDelete, showModalDelete] = useState(false);
 
@@ -111,9 +110,9 @@ const CardTodo = ({ data, userList }: Properties) => {
 
   return (
     <>
-      {data.completed ? (
-        <div className={styles.container}>
-          <div className={styles.header}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          {data.completed ? (
             <div
               className={styles.cta({ completed: data.completed })}
               onClick={handleChange}
@@ -121,56 +120,34 @@ const CardTodo = ({ data, userList }: Properties) => {
               <CheckCircleIcon sx={{ width: '14px', height: '14px' }} />
               Completed
             </div>
-          </div>
-          <p className={styles.name}>{data.title}</p>
-          <div className={styles.footer}>
-            {selectedUser && (
-              <Chip
-                avatar={<Avatar alt={selectedUser.name} />}
-                label={selectedUser.name}
-                variant="outlined"
-              />
-            )}
-            <div className={styles.iconWrapper}>
-              <IconButton onClick={() => showModalEdit(true)}>
-                <EditIcon color="info" />
-              </IconButton>
-              <IconButton onClick={() => showModalDelete(true)}>
-                <DeleteIcon color="error" />
-              </IconButton>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className={styles.container}>
-          <div className={styles.header}>
+          ) : (
             <div
               className={styles.cta({ completed: data.completed })}
               onClick={handleChange}
             >
-              Mark As Complete
+              Mark as complete
             </div>
-          </div>
-          <p className={styles.name}>{data.title}</p>
-          <div className={styles.footer}>
-            {selectedUser && (
-              <Chip
-                avatar={<Avatar alt={selectedUser.name} />}
-                label={selectedUser.name}
-                variant="outlined"
-              />
-            )}
-            <div className={styles.iconWrapper}>
-              <IconButton onClick={() => showModalEdit(true)}>
-                <EditIcon color="info" />
-              </IconButton>
-              <IconButton onClick={() => showModalDelete(true)}>
-                <DeleteIcon color="error" />
-              </IconButton>
-            </div>
+          )}
+        </div>
+        <p className={styles.name}>{data.title}</p>
+        <div className={styles.footer}>
+          {selectedUser && (
+            <Chip
+              avatar={<Avatar alt={selectedUser.name} />}
+              label={selectedUser.name}
+              variant="outlined"
+            />
+          )}
+          <div className={styles.iconWrapper}>
+            <IconButton onClick={() => showModalEdit(true)}>
+              <EditIcon color="info" />
+            </IconButton>
+            <IconButton onClick={() => showModalDelete(true)}>
+              <DeleteIcon color="error" />
+            </IconButton>
           </div>
         </div>
-      )}
+      </div>
       <DialogFormTodo
         open={modalEdit}
         onClose={() => showModalEdit(false)}

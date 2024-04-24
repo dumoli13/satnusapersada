@@ -82,8 +82,8 @@ const styles = {
 const DrawerPostDetail = ({ data, comments, userList }: Properties) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [modalEdit, setModalEdit] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
+  const [modalEdit, showModalEdit] = useState(false);
+  const [modalDelete, showModalDelete] = useState(false);
 
   const user = userList.find((item) => item.id === data.userId);
 
@@ -103,10 +103,10 @@ const DrawerPostDetail = ({ data, comments, userList }: Properties) => {
       <DialogHeader title="Post Detail" onClose={handleClose} />
       <div className={styles.container}>
         <div className={styles.buttonWrapper}>
-          <Button onClick={() => setModalEdit(true)} variant="outlined">
+          <Button onClick={() => showModalEdit(true)} variant="outlined">
             Edit Post
           </Button>
-          <IconButton onClick={() => setModalDelete(true)}>
+          <IconButton onClick={() => showModalDelete(true)}>
             <DeleteIcon color="primary" />
           </IconButton>
         </div>
@@ -139,13 +139,13 @@ const DrawerPostDetail = ({ data, comments, userList }: Properties) => {
           open={modalEdit}
           data={data}
           userList={userList}
-          onClose={() => setModalEdit(false)}
+          onClose={() => showModalEdit(false)}
         />
         <DialogConfirmDelete
           open={modalDelete}
-          onClose={() => setModalDelete(false)}
+          onClose={() => showModalDelete(false)}
           onSuccess={() => {
-            setModalDelete(false);
+            showModalDelete(false);
             handleClose();
           }}
           id={data.id}

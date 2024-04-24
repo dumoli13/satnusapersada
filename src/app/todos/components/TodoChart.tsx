@@ -21,24 +21,26 @@ const styles = {
 };
 
 const TodoChart = ({ userList, todoList }: Properties) => {
+  const xLabels: Array<string> = [];
   const completedData: Array<number> = [];
   const inCompleteData: Array<number> = [];
-  const xLabels: Array<string> = [];
 
   userList.forEach((item) => {
     const { name } = item;
     xLabels.push(
       `${name[0].toUpperCase()}.${name.substring(name.indexOf(' '))}`,
     );
+    let countCompleted = 0;
+    let countIncomplete = 0;
+    todoList.forEach((todo) => {
+      if (todo.userId === item.id) {
+        if (todo.completed) countCompleted += 1;
+        else countIncomplete += 1;
+      }
+    });
 
-    completedData.push(
-      todoList.filter((todo) => todo.userId === item.id && todo.completed)
-        .length,
-    );
-    inCompleteData.push(
-      todoList.filter((todo) => todo.userId === item.id && !todo.completed)
-        .length,
-    );
+    completedData.push(countCompleted);
+    inCompleteData.push(countIncomplete);
   });
 
   return (
