@@ -318,7 +318,7 @@ const DrawerUserDetail = ({ data, todos }: Properties) => {
                 )}
               </div>
             </div>
-          </div>{' '}
+          </div>
         </CustomTabPanel>
         <CustomTabPanel value={tabValue} index={1}>
           <PieChart

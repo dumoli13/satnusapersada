@@ -4,20 +4,14 @@ export type FetchPostListRequest = {
   title?: string;
 };
 
-export type FetchPostListResponse = Array<{
-  userId: string;
-  id: string;
-  title: string;
-  body: string;
-}>;
-
-export type FetchPostDetailResponse = {
-  userId: string;
+export type PostDetail = {
+  userId: number;
+  id: number;
   title: string;
   body: string;
 };
 
-export type FetchPostCommentsResponse = {
+export type CommentDetail = {
   postId: number;
   id: number;
   name: string;
@@ -25,32 +19,10 @@ export type FetchPostCommentsResponse = {
   body: string;
 };
 
+export type FetchPostListResponse = Array<PostDetail>;
+
 export type FetchCreatePostRequest = {
-  userId: string;
+  userId: number;
   title: string;
   body: string;
-};
-
-export type FetchCreatePostResponse = {
-  userId: string;
-  title: string;
-  body: string;
-};
-
-export type FetchUpdatePostRequest = {
-  userId: string;
-  title: string;
-  body: string;
-};
-
-export type FetchUpdatePostResponse = {
-  userId: string;
-  title: string;
-  body: string;
-};
-
-export type FetchPatchPostRequest = {
-  userId?: string;
-  title?: string;
-  body?: string;
 };

@@ -12,9 +12,3 @@ export type PhotoDetail = {
   thumbnailUrl: string;
 };
 export type FetchPhotoListResponse = Array<PhotoDetail>;
-
-export type FetchCreatePhotoRequest = {
-  albumId: number;
-  title: string;
-  body: string;
-};

@@ -47,11 +47,11 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
     }
   };
   return (
-    <Dialog open={open} onClose={onClose} fullScreen>
+    <Dialog open={open} onClose={onClose} fullWidth>
       <DialogHeader title="delete album" onClose={onClose} />
       <div className={styles.root}>
         <p className={styles.description}>
-          Are you sure want to delete this album?{' '}
+          Are you sure want to delete this album?
         </p>
         <div className={styles.ctaContainer}>
           <Button fullWidth variant="contained" onClick={onClose}>

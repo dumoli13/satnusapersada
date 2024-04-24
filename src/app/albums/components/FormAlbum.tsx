@@ -1,5 +1,6 @@
 import { Alert, Button, Snackbar } from '@mui/material';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { css } from '@/styled-system/css';
 import SNTextField, {
   InputTextFieldRef,
@@ -50,6 +51,7 @@ const styles = {
 };
 
 const FormAlbum = ({ data, userList, onClose }: Properties) => {
+  const router = useRouter();
   const userOption = userList.map((item) => ({
     id: item.id,
     label: item.name,
@@ -73,6 +75,7 @@ const FormAlbum = ({ data, userList, onClose }: Properties) => {
       if (data) {
         const response = await fetchUpdateAlbum(data.id, payload);
         if (response.success) {
+          router.refresh();
           setSnacbarSuccess('Album has been updated successfully');
           onClose();
         } else {
@@ -81,13 +84,14 @@ const FormAlbum = ({ data, userList, onClose }: Properties) => {
       } else {
         const response = await fetchCreateAlbum(payload);
         if (response.success) {
+          router.refresh();
           setSnacbarSuccess('New album has been create successfully');
           onClose();
         } else {
           setSnacbarFailed('Error While create new album ');
         }
       }
-      setLoading(true);
+      setLoading(false);
     } else {
       setSnacbarFailed('Please check form that you have entered ');
     }
@@ -138,6 +142,7 @@ const FormAlbum = ({ data, userList, onClose }: Properties) => {
         open={snackbarFailed !== null}
         autoHideDuration={3000}
         onClose={() => setSnacbarFailed(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
           onClose={() => setSnacbarFailed(null)}

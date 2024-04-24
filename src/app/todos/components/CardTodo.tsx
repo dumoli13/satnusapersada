@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { css, cva } from '@/styled-system/css';
 import { TodoDetail } from '@/src/interface/todos';
 import { UserDetail } from '@/src/interface/users';
-import { fetchPatchTodos } from '@/src/service/fetch/todos';
+import { fetchPatchTodo } from '@/src/service/fetch/todos';
 import DialogConfirmDelete from './DialogConfirmDelete';
 import DialogFormTodo from './DialogFormTodo';
 
@@ -103,7 +103,7 @@ const CardTodo = ({ data, userList }: Properties) => {
   const [modalDelete, showModalDelete] = useState(false);
 
   const handleChange = async () => {
-    await fetchPatchTodos(data.id, {
+    await fetchPatchTodo(data.id, {
       completed: !data.completed,
     });
     router.refresh();

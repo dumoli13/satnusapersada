@@ -7,17 +7,11 @@ import SNTextField, {
 } from '@/src/components/input/SNTextField';
 import { validateAllRefs } from '@/src/lib/inputValidation/utils';
 import ModalLoading from '@/src/components/ModalLoading';
-import { FetchCreateTodoRequest, TodoDetail } from '@/src/interface/todos';
-import { fetchCreateTodo, fetchUpdateTodo } from '@/src/service/fetch/todos';
-import SNAutoCompleteSingle, {
-  InputAutoCompleteSingleRef,
-} from '@/src/components/input/SNAutoCompleteSingle';
-import { UserDetail } from '@/src/interface/users';
+import { FetchCreateCommentRequest } from '@/src/interface/comments';
+import { fetchCreateComment } from '@/src/service/fetch/comments';
 
 interface Properties {
-  data?: TodoDetail;
-  userList: UserDetail[];
-  onClose: () => void;
+  id: number;
 }
 
 const styles = {
@@ -50,14 +44,16 @@ const styles = {
   }),
 };
 
-const FormTodo = ({ data, userList, onClose }: Properties) => {
+const FormComment = ({ id }: Properties) => {
   const router = useRouter();
-  const userOption = userList.map((item) => ({
-    id: item.id,
-    label: item.name,
-  }));
-  const inputTitleRef = useRef<InputTextFieldRef>(null);
-  const inputAssigneeRef = useRef<InputAutoCompleteSingleRef>(null);
+
+  const inputEmailRef = useRef<InputTextFieldRef>(null);
+  const inputNameRef = useRef<InputTextFieldRef>(null);
+  const inputBodyRef = useRef<InputTextFieldRef>(null);
+
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [body, setBody] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [snacbarSuccess, setSnacbarSuccess] = useState<string | null>(null);
@@ -65,32 +61,28 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
 
   const handleSubmit = async () => {
     if (
-      await validateAllRefs([inputTitleRef.current, inputAssigneeRef.current])
+      await validateAllRefs([
+        inputEmailRef.current,
+        inputNameRef.current,
+        inputBodyRef.current,
+      ])
     ) {
       setLoading(true);
-      const payload: FetchCreateTodoRequest = {
-        title: inputTitleRef.current!.value,
-        userId: inputAssigneeRef.current!.value!.id,
-        completed: data?.completed || false,
+      const payload: FetchCreateCommentRequest = {
+        postId: id,
+        email,
+        name,
+        body,
       };
-      if (data) {
-        const response = await fetchUpdateTodo(data.id, payload);
-        if (response.success) {
-          router.refresh();
-          setSnacbarSuccess('Todo has been updated successfully');
-          onClose();
-        } else {
-          setSnacbarFailed('Error While updating todo data');
-        }
+      const response = await fetchCreateComment(payload);
+      if (response.success) {
+        router.refresh();
+        setSnacbarSuccess('New comment has been create successfully');
+        setEmail('');
+        setName('');
+        setBody('');
       } else {
-        const response = await fetchCreateTodo(payload);
-        if (response.success) {
-          router.refresh();
-          setSnacbarSuccess('New todo has been create successfully');
-          onClose();
-        } else {
-          setSnacbarFailed('Error While create new todo ');
-        }
+        setSnacbarFailed('Error While create new comment ');
       }
       setLoading(false);
     } else {
@@ -102,27 +94,36 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
     <div>
       <div className={styles.container}>
         <SNTextField
-          id="title"
-          label="Title"
-          placeholder="Enter Title"
-          defaultValue={data?.title}
-          inputRef={inputTitleRef}
-          rules="required"
+          id="email"
+          label="Email"
+          placeholder="Enter Your Email"
+          inputRef={inputEmailRef}
+          rules={['required', 'email']}
+          size="small"
+          value={email}
+          onChange={setEmail}
         />
-
-        <SNAutoCompleteSingle
-          id="assignee"
-          label="Assignee"
-          placeholder="Select Assignee"
-          fullWidth
-          inputRef={inputAssigneeRef}
-          defaultValue={
-            data?.userId
-              ? userOption.find((item) => item.id === data.userId)
-              : undefined
-          }
+        <SNTextField
+          id="name"
+          label="Comment Name"
+          placeholder="Enter Comment Name"
+          inputRef={inputNameRef}
           rules="required"
-          options={userOption}
+          size="small"
+          value={name}
+          onChange={setName}
+        />
+        <SNTextField
+          id="body"
+          label="Comment Body"
+          placeholder="Enter Comment Body"
+          inputRef={inputBodyRef}
+          rules="required"
+          multiline
+          rows={2}
+          size="small"
+          value={body}
+          onChange={setBody}
         />
       </div>
       <div className={styles.ctaContainer}>
@@ -158,4 +159,4 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
   );
 };
 
-export default FormTodo;
+export default FormComment;

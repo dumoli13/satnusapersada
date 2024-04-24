@@ -1,5 +1,6 @@
 import { Alert, Button, Snackbar } from '@mui/material';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { FetchCreateUserRequest, UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
 import SNTextField, {
@@ -48,6 +49,7 @@ const styles = {
 };
 
 const FormUser = ({ data, onClose }: Properties) => {
+  const router = useRouter();
   const inputFullNameRef = useRef<InputTextFieldRef>(null);
   const inpuEmailRef = useRef<InputTextFieldRef>(null);
   const inputPhoneRef = useRef<InputTextFieldRef>(null);
@@ -112,6 +114,7 @@ const FormUser = ({ data, onClose }: Properties) => {
       if (data) {
         const response = await fetchUpdateUser(data.id, payload);
         if (response.success) {
+          router.refresh();
           setSnacbarSuccess('User has been updated successfully');
           onClose();
         } else {
@@ -120,13 +123,14 @@ const FormUser = ({ data, onClose }: Properties) => {
       } else {
         const response = await fetchCreateUser(payload);
         if (response.success) {
+          router.refresh();
           setSnacbarSuccess('New user has been create successfully');
           onClose();
         } else {
           setSnacbarFailed('Error While create new user ');
         }
       }
-      setLoading(true);
+      setLoading(false);
     } else {
       setSnacbarFailed('Please check form that you have entered ');
     }
@@ -286,6 +290,7 @@ const FormUser = ({ data, onClose }: Properties) => {
         open={snackbarFailed !== null}
         autoHideDuration={3000}
         onClose={() => setSnacbarFailed(null)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
           onClose={() => setSnacbarFailed(null)}

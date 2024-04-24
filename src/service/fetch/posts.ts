@@ -1,13 +1,9 @@
 import {
   FetchCreatePostRequest,
-  FetchCreatePostResponse,
-  FetchPatchPostRequest,
-  FetchPostCommentsResponse,
-  FetchPostDetailResponse,
   FetchPostListRequest,
   FetchPostListResponse,
-  FetchUpdatePostRequest,
-  FetchUpdatePostResponse,
+  PostDetail,
+  CommentDetail,
 } from '@/src/interface/posts';
 import fetch from './index';
 
@@ -21,7 +17,7 @@ export async function fetchPosts(payload?: FetchPostListRequest) {
 }
 
 export async function fetchPostDetail(id: string) {
-  return fetch<undefined, FetchPostDetailResponse>({
+  return fetch<undefined, PostDetail>({
     url: `/posts/${id}`,
     method: 'GET',
     cache: 'no-store',
@@ -29,7 +25,7 @@ export async function fetchPostDetail(id: string) {
 }
 
 export async function fetchPostComments(id: string) {
-  return fetch<undefined, FetchPostCommentsResponse>({
+  return fetch<undefined, CommentDetail[]>({
     url: `/posts/${id}/comments`,
     method: 'GET',
     cache: 'no-store',
@@ -37,7 +33,7 @@ export async function fetchPostComments(id: string) {
 }
 
 export async function fetchCreatePost(payload: FetchCreatePostRequest) {
-  return fetch<FetchCreatePostRequest, FetchCreatePostResponse>({
+  return fetch<FetchCreatePostRequest, null>({
     url: '/posts',
     method: 'POST',
     payload,
@@ -46,10 +42,10 @@ export async function fetchCreatePost(payload: FetchCreatePostRequest) {
 }
 
 export async function fetchUpdatePost(
-  id: string,
-  payload: FetchUpdatePostRequest,
+  id: number,
+  payload: FetchCreatePostRequest,
 ) {
-  return fetch<FetchUpdatePostRequest, FetchUpdatePostResponse>({
+  return fetch<FetchCreatePostRequest, null>({
     url: `/posts/${id}`,
     method: 'PUT',
     payload,
@@ -57,20 +53,8 @@ export async function fetchUpdatePost(
   });
 }
 
-export async function fetchPatchPost(
-  id: string,
-  payload: FetchPatchPostRequest,
-) {
-  return fetch<FetchPatchPostRequest, FetchUpdatePostResponse>({
-    url: `/posts/${id}`,
-    method: 'PATCH',
-    payload,
-    cache: 'no-store',
-  });
-}
-
-export async function fetchDeletePost(id: string) {
-  return fetch<undefined, undefined>({
+export async function fetchDeletePost(id: number) {
+  return fetch<undefined, null>({
     url: `/posts/${id}`,
     method: 'DELETE',
     cache: 'no-store',

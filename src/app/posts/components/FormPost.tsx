@@ -7,15 +7,15 @@ import SNTextField, {
 } from '@/src/components/input/SNTextField';
 import { validateAllRefs } from '@/src/lib/inputValidation/utils';
 import ModalLoading from '@/src/components/ModalLoading';
-import { FetchCreateTodoRequest, TodoDetail } from '@/src/interface/todos';
-import { fetchCreateTodo, fetchUpdateTodo } from '@/src/service/fetch/todos';
 import SNAutoCompleteSingle, {
   InputAutoCompleteSingleRef,
 } from '@/src/components/input/SNAutoCompleteSingle';
 import { UserDetail } from '@/src/interface/users';
+import { FetchCreatePostRequest, PostDetail } from '@/src/interface/posts';
+import { fetchCreatePost, fetchUpdatePost } from '@/src/service/fetch/posts';
 
 interface Properties {
-  data?: TodoDetail;
+  data?: PostDetail;
   userList: UserDetail[];
   onClose: () => void;
 }
@@ -50,14 +50,15 @@ const styles = {
   }),
 };
 
-const FormTodo = ({ data, userList, onClose }: Properties) => {
+const FormPost = ({ data, userList, onClose }: Properties) => {
   const router = useRouter();
   const userOption = userList.map((item) => ({
     id: item.id,
     label: item.name,
   }));
   const inputTitleRef = useRef<InputTextFieldRef>(null);
-  const inputAssigneeRef = useRef<InputAutoCompleteSingleRef>(null);
+  const inputBodyRef = useRef<InputTextFieldRef>(null);
+  const inputAuthorRef = useRef<InputAutoCompleteSingleRef>(null);
 
   const [loading, setLoading] = useState(false);
   const [snacbarSuccess, setSnacbarSuccess] = useState<string | null>(null);
@@ -65,31 +66,35 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
 
   const handleSubmit = async () => {
     if (
-      await validateAllRefs([inputTitleRef.current, inputAssigneeRef.current])
+      await validateAllRefs([
+        inputTitleRef.current,
+        inputBodyRef.current,
+        inputAuthorRef.current,
+      ])
     ) {
       setLoading(true);
-      const payload: FetchCreateTodoRequest = {
+      const payload: FetchCreatePostRequest = {
         title: inputTitleRef.current!.value,
-        userId: inputAssigneeRef.current!.value!.id,
-        completed: data?.completed || false,
+        body: inputBodyRef.current!.value,
+        userId: inputAuthorRef.current!.value!.id,
       };
       if (data) {
-        const response = await fetchUpdateTodo(data.id, payload);
+        const response = await fetchUpdatePost(data.id, payload);
         if (response.success) {
           router.refresh();
-          setSnacbarSuccess('Todo has been updated successfully');
+          setSnacbarSuccess('Post has been updated successfully');
           onClose();
         } else {
-          setSnacbarFailed('Error While updating todo data');
+          setSnacbarFailed('Error While updating post data');
         }
       } else {
-        const response = await fetchCreateTodo(payload);
+        const response = await fetchCreatePost(payload);
         if (response.success) {
           router.refresh();
-          setSnacbarSuccess('New todo has been create successfully');
+          setSnacbarSuccess('New post has been create successfully');
           onClose();
         } else {
-          setSnacbarFailed('Error While create new todo ');
+          setSnacbarFailed('Error While create new post ');
         }
       }
       setLoading(false);
@@ -109,13 +114,22 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
           inputRef={inputTitleRef}
           rules="required"
         />
-
+        <SNTextField
+          id="body"
+          label="Body"
+          placeholder="Enter Body"
+          defaultValue={data?.body}
+          inputRef={inputBodyRef}
+          rules="required"
+          multiline
+          rows={3}
+        />
         <SNAutoCompleteSingle
-          id="assignee"
-          label="Assignee"
-          placeholder="Select Assignee"
+          id="author"
+          label="Author"
+          placeholder="Select Author"
           fullWidth
-          inputRef={inputAssigneeRef}
+          inputRef={inputAuthorRef}
           defaultValue={
             data?.userId
               ? userOption.find((item) => item.id === data.userId)
@@ -158,4 +172,4 @@ const FormTodo = ({ data, userList, onClose }: Properties) => {
   );
 };
 
-export default FormTodo;
+export default FormPost;

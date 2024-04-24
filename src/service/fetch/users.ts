@@ -1,6 +1,5 @@
 import {
   FetchCreateUserRequest,
-  FetchPatchUserRequest,
   FetchUserListRequest,
   FetchUserListResponse,
   UserDetail,
@@ -40,18 +39,6 @@ export async function fetchUpdateUser(
   return fetch<FetchCreateUserRequest, undefined>({
     url: `/users/${id}`,
     method: 'PUT',
-    payload,
-    cache: 'no-store',
-  });
-}
-
-export async function fetchPatchUser(
-  id: number,
-  payload: FetchPatchUserRequest,
-) {
-  return fetch<FetchPatchUserRequest, undefined>({
-    url: `/users/${id}`,
-    method: 'PATCH',
     payload,
     cache: 'no-store',
   });

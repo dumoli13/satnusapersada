@@ -76,10 +76,10 @@ const Appbar = () => {
           />
           <div className={styles.menuContainer}>
             <Link
-              href="/"
+              href="/posts"
               className={styles.button({ selected: pathName === '/' })}
             >
-              Post
+              Posts
             </Link>
             <Link
               href="/albums"

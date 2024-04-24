@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { css } from '@/styled-system/css';
 import DialogHeader from '@/src/components/DialogHeader';
 import ModalLoading from '@/src/components/ModalLoading';
-import { fetchDeleteTodos } from '@/src/service/fetch/todos';
+import { fetchDeleteTodo } from '@/src/service/fetch/todos';
 
 interface Properties {
   open: boolean;
@@ -36,7 +36,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
 
   const handleDelete = async () => {
     setLoading(true);
-    const response = await fetchDeleteTodos(id);
+    const response = await fetchDeleteTodo(id);
     setLoading(false);
     if (response.success) {
       onSuccess();
@@ -50,7 +50,7 @@ const DialogConfirmDelete = ({ open, onClose, onSuccess, id }: Properties) => {
       <DialogHeader title="delete todo" onClose={onClose} />
       <div className={styles.root}>
         <p className={styles.description}>
-          Are you sure want to delete this todo?{' '}
+          Are you sure want to delete this todo?
         </p>
         <div className={styles.ctaContainer}>
           <Button fullWidth variant="contained" onClick={onClose}>

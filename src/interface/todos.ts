@@ -14,8 +14,6 @@ export type FetchTodoListRequest = {
 
 export type FetchTodoListResponse = Array<TodoDetail>;
 
-export type FetchTodoDetailResponse = TodoDetail;
-
 export type FetchCreateTodoRequest = {
   userId: number;
   title: string;
