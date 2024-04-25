@@ -1,9 +1,9 @@
 'use client';
 
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button, Popover } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { MouseEvent, useEffect, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { css, cva } from '@/styled-system/css';
 import SNTextField from './input/SNTextField';

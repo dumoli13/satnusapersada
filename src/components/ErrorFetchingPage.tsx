@@ -1,3 +1,4 @@
+import React from 'react';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { css } from '@/styled-system/css';
 import EmptyList from './EmptyList';
