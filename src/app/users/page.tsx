@@ -1,3 +1,4 @@
+import React from 'react';
 import { Metadata } from 'next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
@@ -24,6 +25,10 @@ const styles = {
       marginBottom: 'xl',
     },
   }),
+  heading: css({
+    fontSize: '5xl',
+    fontWeight: 'bold',
+  }),
   cardContainer: css({
     display: 'grid',
     gap: 'base',
@@ -41,8 +46,9 @@ const UsersPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
+  const { q } = searchParams;
   const response = await fetchUsers({
-    name: searchParams.q,
+    q,
   });
 
   let userDetail: UserDetail | null = null;
@@ -65,6 +71,7 @@ const UsersPage = async ({
         <>
           <div className={styles.headerContainer}>
             <ButtonAdd />
+            <h1 className={styles.heading}>User</h1>
             <FilterSearchQuery placeholder="Search User" />
           </div>
           {response.data.length > 0 && (

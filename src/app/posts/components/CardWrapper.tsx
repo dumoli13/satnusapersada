@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Skeleton } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { PostDetail } from '@/src/interface/posts';

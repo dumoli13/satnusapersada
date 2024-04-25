@@ -1,9 +1,5 @@
 export type FetchUserListRequest = {
-  name?: string;
-  username?: string;
-  email?: string;
-  phone?: string;
-  website?: string;
+  q?: string;
 };
 
 export type UserDetail = {
@@ -17,8 +13,8 @@ export type UserDetail = {
     city: string;
     zipcode: string;
     geo: {
-      lat: number;
-      lng: number;
+      lat: string;
+      lng: string;
     };
   };
   phone: string;
@@ -42,8 +38,8 @@ export type FetchCreateUserRequest = {
     city: string;
     zipcode: string;
     geo: {
-      lat: number;
-      lng: number;
+      lat: string;
+      lng: string;
     };
   };
   phone: string;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Metadata } from 'next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
@@ -41,12 +41,11 @@ const styles = {
 };
 
 interface Properties {
-  searchParams?: { [key: string]: string | undefined };
+  searchParams: { [key: string]: string | undefined };
 }
 
-const PostsPage = async ({ searchParams }: Properties) => {
-  const id = searchParams?.id;
-  const q = searchParams?.q;
+const PostsPage: FC<Properties> = async ({ searchParams }) => {
+  const { id, q } = searchParams;
 
   const responsePost = await fetchPosts({
     q,

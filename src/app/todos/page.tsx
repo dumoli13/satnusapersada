@@ -1,3 +1,4 @@
+import React from 'react';
 import { Metadata } from 'next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';
@@ -21,6 +22,10 @@ const styles = {
       marginBottom: 'xl',
     },
   }),
+  heading: css({
+    fontSize: '5xl',
+    fontWeight: 'bold',
+  }),
 };
 
 const TodosPage = async ({
@@ -32,7 +37,7 @@ const TodosPage = async ({
 
   const [todoResponse, userListResponse] = await Promise.all([
     fetchTodos({
-      title: q,
+      q,
     }),
     fetchUsers(),
   ]);
@@ -47,6 +52,7 @@ const TodosPage = async ({
       <Layout>
         <div className={styles.headerContainer}>
           <ButtonAdd userList={userListResponse.data} />
+          <h1 className={styles.heading}>Todo</h1>
           <FilterSearchQuery placeholder="Search Todo" />
         </div>
         {todoList.length > 0 && (

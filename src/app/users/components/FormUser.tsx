@@ -1,5 +1,5 @@
+import React, { useRef, useState } from 'react';
 import { Alert, Button, Snackbar } from '@mui/material';
-import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FetchCreateUserRequest, UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
@@ -9,9 +9,6 @@ import SNTextField, {
 import { validateAllRefs } from '@/src/lib/inputValidation/utils';
 import { fetchCreateUser, fetchUpdateUser } from '@/src/service/fetch/users';
 import ModalLoading from '@/src/components/ModalLoading';
-import SNNumberField, {
-  InputNumberFieldRef,
-} from '@/src/components/input/SNNumberField';
 
 interface Properties {
   data?: UserDetail;
@@ -62,8 +59,8 @@ const FormUser = ({ data, onClose }: Properties) => {
   const inputAddressSuiteRef = useRef<InputTextFieldRef>(null);
   const inputAddressCityRef = useRef<InputTextFieldRef>(null);
   const inputAddressZipcodeRef = useRef<InputTextFieldRef>(null);
-  const inputAddressLatRef = useRef<InputNumberFieldRef>(null);
-  const inputAddressLngRef = useRef<InputNumberFieldRef>(null);
+  const inputAddressLatRef = useRef<InputTextFieldRef>(null);
+  const inputAddressLngRef = useRef<InputTextFieldRef>(null);
 
   const [loading, setLoading] = useState(false);
   const [snackbarSuccess, setSnacbarSuccess] = useState<string | null>(null);
@@ -99,8 +96,8 @@ const FormUser = ({ data, onClose }: Properties) => {
           city: inputAddressCityRef.current!.value,
           zipcode: inputAddressZipcodeRef.current!.value,
           geo: {
-            lat: inputAddressLatRef.current!.value!,
-            lng: inputAddressLngRef.current!.value!,
+            lat: inputAddressLatRef.current!.value!.toString(),
+            lng: inputAddressLngRef.current!.value!.toString(),
           },
         },
         phone: inputPhoneRef.current!.value!,
@@ -254,7 +251,7 @@ const FormUser = ({ data, onClose }: Properties) => {
           />
         </div>
         <div className={styles.halfField}>
-          <SNNumberField
+          <SNTextField
             id="addressLatitude"
             label="Latitude"
             placeholder="Enter Map Latitude Coordinate"
@@ -262,7 +259,7 @@ const FormUser = ({ data, onClose }: Properties) => {
             inputRef={inputAddressLatRef}
             rules="required"
           />
-          <SNNumberField
+          <SNTextField
             id="addressLongitude"
             label="Longitude"
             placeholder="Enter Map Longitude Coordinate"

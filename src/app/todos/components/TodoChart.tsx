@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { BarChart } from '@mui/x-charts';
 import { TodoDetail } from '@/src/interface/todos';
 import { UserDetail } from '@/src/interface/users';
@@ -21,26 +22,36 @@ const styles = {
 };
 
 const TodoChart = ({ userList, todoList }: Properties) => {
-  const xLabels: Array<string> = [];
-  const completedData: Array<number> = [];
-  const inCompleteData: Array<number> = [];
+  const userMap = new Map<
+    number,
+    { name: string; completed: number; inComplete: number }
+  >();
 
-  userList.forEach((item) => {
-    const { name } = item;
-    xLabels.push(
-      `${name[0].toUpperCase()}.${name.substring(name.indexOf(' '))}`,
-    );
-    let countCompleted = 0;
-    let countIncomplete = 0;
-    todoList.forEach((todo) => {
-      if (todo.userId === item.id) {
-        if (todo.completed) countCompleted += 1;
-        else countIncomplete += 1;
+  userList.forEach((user) => {
+    userMap.set(user.id, { name: user.name, completed: 0, inComplete: 0 });
+  });
+
+  todoList.forEach((todo) => {
+    const user = userMap.get(todo.userId);
+    if (user) {
+      if (todo.completed) {
+        user.completed += 1;
+      } else {
+        user.inComplete += 1;
       }
-    });
+    }
+  });
 
-    completedData.push(countCompleted);
-    inCompleteData.push(countIncomplete);
+  const xLabels: string[] = [];
+  const completedData: number[] = [];
+  const inCompleteData: number[] = [];
+
+  userMap.forEach((user) => {
+    xLabels.push(
+      `${user.name[0].toUpperCase()}.${user.name.substring(user.name.indexOf(' ') + 1)}`,
+    );
+    completedData.push(user.completed);
+    inCompleteData.push(user.inComplete);
   });
 
   return (

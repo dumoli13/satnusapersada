@@ -1,3 +1,4 @@
+import React from 'react';
 import { Dialog, DialogContent } from '@mui/material';
 import DialogHeader from '@/src/components/DialogHeader';
 import FormPost from './FormPost';
