@@ -1,7 +1,5 @@
 export type FetchPhotoListRequest = {
-  albumId?: string;
-  id?: string;
-  title?: string;
+  q?: string;
 };
 
 export type PhotoDetail = {

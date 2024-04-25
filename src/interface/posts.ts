@@ -1,7 +1,5 @@
 export type FetchPostListRequest = {
-  postId?: string;
-  id?: string;
-  title?: string;
+  q?: string;
 };
 
 export type PostDetail = {

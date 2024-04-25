@@ -1,3 +1,4 @@
+import React, { useState, ReactNode } from 'react';
 import { PieChart, useDrawingArea } from '@mui/x-charts';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EmailIcon from '@mui/icons-material/Email';
@@ -5,7 +6,6 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LanguageIcon from '@mui/icons-material/Language';
 import BusinessIcon from '@mui/icons-material/Business';
 import HomeIcon from '@mui/icons-material/Home';
-import { ReactNode, useState } from 'react';
 import { Tab, Tabs } from '@mui/material';
 import Link from 'next/link';
 import { TodoDetail } from '@/src/interface/todos';

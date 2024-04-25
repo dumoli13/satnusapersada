@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import { PhotoDetail } from '@/src/interface/photos';
 import { css } from '@/styled-system/css';

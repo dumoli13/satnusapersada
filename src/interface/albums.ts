@@ -1,4 +1,5 @@
 export type FetchAlbumListRequest = {
+  q?: string;
   userId?: string;
   id?: string;
   title?: string;

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Drawer, Skeleton } from '@mui/material';
 import { useRouter, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';

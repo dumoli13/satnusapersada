@@ -99,6 +99,7 @@ const config: Config = {
     '^@/src/lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@/src/service/(.*)$': '<rootDir>/src/service/$1',
     '^@/styled-system/(.*)$': '<rootDir>/styled-system/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -126,7 +127,7 @@ const config: Config = {
   // resetModules: false,
 
   // A path to a custom resolver
-  // resolver: undefined,
+  resolver: undefined,
 
   // Automatically restore mock state and implementation before every test
   // restoreMocks: false,
@@ -187,7 +188,7 @@ const config: Config = {
   // A map from regular expressions to paths to transformers
   // transform: undefined,
   transform: {
-    '^.+\\.(ts|tsx)?$': 'babel-jest',
+    '^.+\\.(js|jsx|ts|tsx)?$': 'babel-jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
@@ -195,10 +196,7 @@ const config: Config = {
   //   "/node_modules/",
   //   "\\.pnp\\.[^\\/]+$"
   // ],
-  transformIgnorePatterns: [
-    'node_modules/(?!variables/.*)',
-    'styled-system/.*',
-  ],
+  transformIgnorePatterns: ['node_modules/(?!styled-system/css).+\\.js$'],
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

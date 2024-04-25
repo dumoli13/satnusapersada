@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';

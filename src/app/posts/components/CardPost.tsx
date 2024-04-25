@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
