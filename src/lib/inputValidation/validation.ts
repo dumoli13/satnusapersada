@@ -36,7 +36,8 @@ export async function validate<T>({
         (Array.isArray(value) && value.length > 0)
       );
     case 'email': {
-      const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      const regex =
+        /^(?!\.)[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@(?:[a-zA-Z0-9-]+\.)+(?:[a-zA-Z]{2,}|(?:\d{1,3}\.){3}\d{1,3})$/;
       return typeof value === 'string' && value.length > 0
         ? regex.test(value)
         : true;
