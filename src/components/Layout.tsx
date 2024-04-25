@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { css } from '@/styled-system/css';
+import Appbar from './Appbar';
 
 const styles = {
   root: css({
@@ -13,7 +14,10 @@ const styles = {
 };
 
 const Layout = ({ children }: { children: ReactNode }) => (
-  <div className={styles.root}>{children}</div>
+  <div className={styles.root}>
+    <Appbar />
+    {children}
+  </div>
 );
 
 export default Layout;

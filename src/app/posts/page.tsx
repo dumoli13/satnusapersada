@@ -27,6 +27,10 @@ const styles = {
       marginBottom: 'xl',
     },
   }),
+  heading: css({
+    fontSize: '5xl',
+    fontWeight: 'bold',
+  }),
   cardContainer: css({
     display: 'block',
     columnCount: '3',
@@ -35,12 +39,12 @@ const styles = {
   }),
 };
 
-const HomePage = async ({
-  searchParams,
-}: {
+interface Properties {
   searchParams: { [key: string]: string | undefined };
-}) => {
-  const { q } = searchParams;
+}
+
+const PostsPage = async ({ searchParams }: Properties) => {
+  const { id, q } = searchParams;
 
   const responsePost = await fetchPosts({
     title: q,
@@ -49,10 +53,10 @@ const HomePage = async ({
 
   let postDetail: PostDetail | null = null;
   let commentList: Array<CommentDetail> = [];
-  if (searchParams.id) {
+  if (id) {
     const [postDetailResponse, commentListResponse] = await Promise.all([
-      fetchPostDetail(searchParams.id),
-      fetchPostComments(searchParams.id),
+      fetchPostDetail(id),
+      fetchPostComments(id),
     ]);
 
     if (postDetailResponse.success) {
@@ -69,6 +73,7 @@ const HomePage = async ({
       <Layout>
         <div className={styles.headerContainer}>
           <ButtonAdd userList={userList} />
+          <h1 className={styles.heading}>Post</h1>
           <FilterSearchQuery placeholder="Search Post" />
         </div>
         {responsePost.data.length > 0 && (
@@ -79,14 +84,14 @@ const HomePage = async ({
             })}
           </div>
         )}
-        {responsePost.data.length === 0 && searchParams.q && (
+        {responsePost.data.length === 0 && q && (
           <EmptyList
             icon={<SearchIcon sx={{ width: 250, height: 250 }} color="error" />}
             title="No Data found"
             description="Please try another post title"
           />
         )}
-        {responsePost.data.length === 0 && !searchParams.q && (
+        {responsePost.data.length === 0 && !q && (
           <EmptyList
             icon={
               <HighlightOffIcon
@@ -115,8 +120,8 @@ const HomePage = async ({
   );
 };
 
-export default HomePage;
+export default PostsPage;
 
 export const metadata: Metadata = {
-  title: 'HOME - SAT NUSAPERSADA',
+  title: 'POSTS - SAT NUSAPERSADA',
 };

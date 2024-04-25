@@ -1,3 +1,4 @@
+import React from 'react';
 import { Metadata } from 'next';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import SearchIcon from '@mui/icons-material/Search';

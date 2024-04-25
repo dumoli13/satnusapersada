@@ -20,6 +20,7 @@
       }
     ],
     "baseUrl": ".",
+    "types": ["@testing-library/jest-dom"],
     "paths": {
       "@/*": ["./*"],
       "@/styled-system/*": ["styled-system/*"]
