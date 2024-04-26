@@ -1,3 +1,4 @@
+import React from 'react';
 import { CircularProgress, Dialog } from '@mui/material';
 import { css } from '@/styled-system/css';
 
@@ -16,7 +17,7 @@ const styles = {
   }),
 };
 const ModalLoading = ({ open }: Properties) => (
-  <Dialog open={open}>
+  <Dialog id="modal-loading" open={open}>
     <div className={styles.root}>
       <CircularProgress />
     </div>

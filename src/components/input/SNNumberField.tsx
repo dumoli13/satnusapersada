@@ -1,11 +1,4 @@
-import {
-  IconButton,
-  InputAdornment,
-  TextField,
-  TextFieldProps,
-} from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import {
+import React, {
   ChangeEvent,
   MouseEvent,
   RefCallback,
@@ -15,6 +8,13 @@ import {
   useRef,
   useState,
 } from 'react';
+import {
+  IconButton,
+  InputAdornment,
+  TextField,
+  TextFieldProps,
+} from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import useInputValidation, {
   RuleObj,
