@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Skeleton } from '@mui/material';
 import { PhotoDetail } from '@/src/interface/photos';
 import { css } from '@/styled-system/css';
 
@@ -35,6 +36,14 @@ const DetailPhoto = ({ photos }: Properties) => (
         height={117}
         alt={item.title}
       />
+    ))}
+  </div>
+);
+
+export const SkeletonDetailPhoto = () => (
+  <div className={styles.boxContainer}>
+    {Array(...Array(4)).map((_val, key) => (
+      <Skeleton variant="rounded" key={key} height={117} width={117} />
     ))}
   </div>
 );

@@ -6,10 +6,9 @@ import { useState } from 'react';
 import SNPagination from '@/src/components/SNPagination';
 import { UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
-// import CardUser from './CardUser';
 
 const CardUser = dynamic(() => import('./CardUser'), {
-  loading: () => <Skeleton height={44} />,
+  loading: () => <Skeleton variant="rounded" height={125} />,
 });
 
 interface Properties {
