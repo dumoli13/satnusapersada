@@ -13,7 +13,7 @@ import { css } from '@/styled-system/css';
 const DrawerAlbumDetail = dynamic(() => import('./DrawerAlbumDetail'));
 
 const CardAlbum = dynamic(() => import('./CardAlbum'), {
-  loading: () => <Skeleton height={175} width="100%" />,
+  loading: () => <Skeleton variant="rounded" height={175} width="100%" />,
 });
 
 interface Properties {
