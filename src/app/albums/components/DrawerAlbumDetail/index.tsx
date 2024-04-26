@@ -10,15 +10,16 @@ import { createQueryString } from '@/src/lib/misc';
 import { AlbumDetail } from '@/src/interface/albums';
 import { PhotoDetail } from '@/src/interface/photos';
 import { UserDetail } from '@/src/interface/users';
+import { SkeletonDetailPhoto } from './DetailPhoto';
 
 const ButtonDelete = dynamic(() => import('./ButtonDelete'), {
-  loading: () => <Skeleton height={44} />,
+  loading: () => <Skeleton variant="rounded" height={39} width={122} />,
 });
 const ButtonEdit = dynamic(() => import('./ButtonEdit'), {
-  loading: () => <Skeleton height={44} />,
+  loading: () => <Skeleton variant="rounded" height={39} width={39} />,
 });
 const DetailPhoto = dynamic(() => import('./DetailPhoto'), {
-  loading: () => <Skeleton height={44} />,
+  loading: () => <SkeletonDetailPhoto />,
 });
 
 interface Properties {

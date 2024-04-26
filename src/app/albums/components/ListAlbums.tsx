@@ -9,14 +9,11 @@ import { AlbumDetail } from '@/src/interface/albums';
 import SNPagination from '@/src/components/SNPagination';
 import { PhotoDetail } from '@/src/interface/photos';
 import { css } from '@/styled-system/css';
-// import DrawerAlbumDetail from './DrawerAlbumDetail';
 
-const DrawerAlbumDetail = dynamic(() => import('./DrawerAlbumDetail'), {
-  loading: () => <Skeleton height={44} />,
-});
+const DrawerAlbumDetail = dynamic(() => import('./DrawerAlbumDetail'));
 
 const CardAlbum = dynamic(() => import('./CardAlbum'), {
-  loading: () => <Skeleton height={44} />,
+  loading: () => <Skeleton height={175} width="100%" />,
 });
 
 interface Properties {
