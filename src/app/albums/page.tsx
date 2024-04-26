@@ -9,12 +9,10 @@ import { css } from '@/styled-system/css';
 import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import EmptyList from '@/src/components/EmptyList';
-import ListUser from './components/ListUser';
 import { fetchAlbumDetail, fetchAlbums } from '@/src/service/fetch/albums';
 import { fetchPhotos } from '@/src/service/fetch/photos';
 import { AlbumDetail } from '@/src/interface/albums';
-import DrawerAlbumDetail from './components/DrawerAlbumDetail';
-import AlbumWrapper from './components/AlbumWrapper';
+import ListAlbums from './components/ListAlbums';
 
 const styles = {
   headerContainer: css({
@@ -44,9 +42,11 @@ const AlbumsPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { q, userId } = searchParams;
+  const userId = searchParams?.userId;
+  const q = searchParams?.q;
+  const id = searchParams?.id;
 
-  const [responseAlbum, responsePhoto] = await Promise.all([
+  const [albumResponse, photoResponse] = await Promise.all([
     fetchAlbums({
       q,
       userId,
@@ -65,8 +65,8 @@ const AlbumsPage = async ({
 
   return (
     <Layout>
-      {responseAlbum.success &&
-      responsePhoto.success &&
+      {albumResponse.success &&
+      photoResponse.success &&
       userListResponse.success ? (
         <>
           <div className={styles.headerContainer}>
@@ -74,17 +74,20 @@ const AlbumsPage = async ({
             <h1 className={styles.heading}>Album</h1>
             <FilterSearchQuery placeholder="Search Album" />
           </div>
-          {responseAlbum.data.length > 0 && (
-            <>
-              <ListUser userList={userListResponse.data} />
-              <AlbumWrapper
-                data={responseAlbum.data}
-                photos={responsePhoto.data}
-                userId={userId}
-              />
-            </>
+          {albumResponse.data.length > 0 && (
+            <ListAlbums
+              data={albumResponse.data.filter((item) =>
+                userId && !Number.isNaN(userId)
+                  ? item.userId === parseInt(userId, 10)
+                  : true,
+              )}
+              photoList={photoResponse.data}
+              userList={userListResponse.data}
+              albumDetail={albumDetail}
+              selectedId={id}
+            />
           )}
-          {responseAlbum.data.length === 0 && searchParams.q && (
+          {albumResponse.data.length === 0 && q && (
             <EmptyList
               icon={
                 <SearchIcon sx={{ width: 250, height: 250 }} color="error" />
@@ -93,7 +96,7 @@ const AlbumsPage = async ({
               description="Please try another album title"
             />
           )}
-          {responseAlbum.data.length === 0 && !searchParams.q && (
+          {albumResponse.data.length === 0 && !q && (
             <EmptyList
               icon={
                 <HighlightOffIcon
@@ -105,15 +108,15 @@ const AlbumsPage = async ({
               description="Create new album"
             />
           )}
-          {albumDetail && (
+          {/* {albumDetail && (
             <DrawerAlbumDetail
               data={albumDetail}
-              photos={responsePhoto.data.filter(
-                (photo) => searchParams.id === photo.albumId.toString(),
+              photos={photoResponse.data.filter(
+                (photo) => id === photo.albumId.toString(),
               )}
               userList={userListResponse.data}
             />
-          )}
+          )} */}
         </>
       ) : (
         <ErrorFetchingPage />

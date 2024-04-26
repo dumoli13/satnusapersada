@@ -16,7 +16,7 @@ const ButtonAdd = () => {
         size="large"
         variant="contained"
       >
-        Add New User
+        Add New
       </Button>
       <DialogFormUser open={openModal} onClose={() => setOpenModal(false)} />
     </>

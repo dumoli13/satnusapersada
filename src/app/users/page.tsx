@@ -6,7 +6,6 @@ import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUserDetail, fetchUsers } from '@/src/service/fetch/users';
 import { css } from '@/styled-system/css';
-import CardUser from './components/CardUser';
 import ButtonAdd from './components/ButtonAdd';
 import DrawerUserDetail from './components/DrawerUserDetail';
 import { UserDetail } from '@/src/interface/users';
@@ -14,6 +13,7 @@ import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import { TodoDetail } from '@/src/interface/todos';
 import { fetchTodos } from '@/src/service/fetch/todos';
 import EmptyList from '@/src/components/EmptyList';
+import ListUsers from './components/ListUsers';
 
 const styles = {
   headerContainer: css({
@@ -46,7 +46,7 @@ const UsersPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { q } = searchParams;
+  const q = searchParams?.q;
   const response = await fetchUsers({
     q,
   });
@@ -74,13 +74,7 @@ const UsersPage = async ({
             <h1 className={styles.heading}>User</h1>
             <FilterSearchQuery placeholder="Search User" />
           </div>
-          {response.data.length > 0 && (
-            <div className={styles.cardContainer}>
-              {response.data.map((item, index) => (
-                <CardUser key={index} {...item} />
-              ))}
-            </div>
-          )}
+          {response.data.length > 0 && <ListUsers data={response.data} />}
           {response.data.length === 0 && searchParams.q && (
             <EmptyList
               icon={

@@ -78,7 +78,7 @@ const Appbar = () => {
           <div className={styles.menuContainer}>
             <Link
               href="/posts"
-              className={styles.button({ selected: pathName === '/' })}
+              className={styles.button({ selected: pathName === '/posts' })}
             >
               Posts
             </Link>

@@ -96,6 +96,8 @@ const CardAlbum = ({ data, photos }: Properties) => {
                 key={index}
                 className={styles.thumbnail}
                 src={item.thumbnailUrl}
+                loading="lazy"
+                blurDataURL={item.thumbnailUrl}
                 width={120}
                 height={120}
                 alt={item.title}

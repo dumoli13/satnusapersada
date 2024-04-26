@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { TodoDetail } from '@/src/interface/todos';
 import { UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
-import CardTodo from './CardTodo';
+import CardTodo from '../CardTodo';
 import ListUser from '../ListUser';
 
 const TodoChart = dynamic(() => import('../TodoChart'), {
@@ -14,6 +14,7 @@ const TodoChart = dynamic(() => import('../TodoChart'), {
 });
 
 interface Properties {
+  rawData: Array<TodoDetail>;
   data: Array<TodoDetail>;
   userList: Array<UserDetail>;
 }
@@ -32,9 +33,9 @@ const styles = {
   }),
 };
 
-const TodoWrapper = ({ data, userList }: Properties) => (
+const TodoWrapper = ({ rawData, data, userList }: Properties) => (
   <>
-    <TodoChart todoList={data} userList={userList} />
+    <TodoChart todoList={rawData} userList={userList} />
     <ListUser userList={userList} />
     <div className={styles.cardContainer}>
       {data.map((item, index) => (

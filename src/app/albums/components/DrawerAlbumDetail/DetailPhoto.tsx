@@ -29,6 +29,7 @@ const DetailPhoto = ({ photos }: Properties) => (
         key={index}
         className={styles.thumbnail}
         src={item.url}
+        loading="lazy"
         blurDataURL={item.thumbnailUrl}
         width={117}
         height={117}

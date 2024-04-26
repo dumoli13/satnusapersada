@@ -20,7 +20,7 @@ const ButtonAdd = ({ userList }: Properties) => {
         size="large"
         variant="contained"
       >
-        Add New Post
+        Add New
       </Button>
       <DialogFormPost
         open={openModal}

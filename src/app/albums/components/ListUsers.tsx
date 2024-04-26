@@ -20,7 +20,7 @@ const styles = {
   }),
 };
 
-const ListUser = ({ userList }: Properties) => {
+const ListUsers = ({ userList }: Properties) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -66,4 +66,4 @@ const ListUser = ({ userList }: Properties) => {
   );
 };
 
-export default ListUser;
+export default ListUsers;
