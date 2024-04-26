@@ -20,7 +20,7 @@ const ButtonAdd = ({ userList }: Properties) => {
         size="large"
         variant="contained"
       >
-        Add New Album
+        Add New
       </Button>
       <DialogFormAlbum
         open={openModal}

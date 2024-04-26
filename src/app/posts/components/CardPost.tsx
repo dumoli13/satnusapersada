@@ -18,7 +18,6 @@ const styles = {
     flexDirection: 'column',
     gap: 'small',
     padding: 'base',
-    marginBottom: '2xl',
     borderY: 'info',
     breakInside: 'avoid',
     _hover: {

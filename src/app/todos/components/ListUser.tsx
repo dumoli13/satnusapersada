@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Avatar, Chip } from '@mui/material';
+import { Avatar, Chip, Skeleton } from '@mui/material';
 import { css } from '@/styled-system/css';
 import { UserDetail } from '@/src/interface/users';
 import { createQueryString } from '@/src/lib/misc';
@@ -65,5 +65,13 @@ const ListUser = ({ userList }: Properties) => {
     </div>
   );
 };
+
+export const SkeletonListUser = () => (
+  <div className={styles.container}>
+    {Array(...Array(3)).map((_val, key) => (
+      <Skeleton key={key} variant="rounded" height={32} width={100} />
+    ))}
+  </div>
+);
 
 export default ListUser;

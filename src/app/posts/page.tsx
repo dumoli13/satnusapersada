@@ -9,14 +9,14 @@ import { css } from '@/styled-system/css';
 import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import EmptyList from '@/src/components/EmptyList';
-import DrawerPostDetail from './components/DrawerPostDetail';
+// import DrawerPostDetail from './components/DrawerPostDetail';
 import { CommentDetail, PostDetail } from '@/src/interface/posts';
 import {
   fetchPostComments,
   fetchPostDetail,
   fetchPosts,
 } from '@/src/service/fetch/posts';
-import CardPost from './components/CardPost';
+import ListPosts from './components/ListPosts';
 
 const styles = {
   headerContainer: css({
@@ -24,7 +24,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 'base',
-    xl: {
+    lg: {
       marginBottom: 'xl',
     },
   }),
@@ -33,10 +33,15 @@ const styles = {
     fontWeight: 'bold',
   }),
   cardContainer: css({
-    display: 'block',
-    columnCount: '3',
-    columnGap: '2xl',
-    overflowY: 'auto',
+    display: 'grid',
+    gap: '2xl',
+    gridTemplateColumns: '1',
+    md: {
+      gridTemplateColumns: '2',
+    },
+    lg: {
+      gridTemplateColumns: '3',
+    },
   }),
 };
 
@@ -47,8 +52,7 @@ interface Properties {
 const PostsPage = async ({ searchParams }: Properties) => {
   const id = searchParams?.id;
   const q = searchParams?.q;
-
-  const responsePost = await fetchPosts({
+  const postResponse = await fetchPosts({
     q,
   });
   const userListResponse = await fetchUsers();
@@ -69,8 +73,10 @@ const PostsPage = async ({ searchParams }: Properties) => {
     }
   }
 
-  if (responsePost.success && userListResponse.success) {
+  if (postResponse.success && userListResponse.success) {
+    const postList = postResponse.data;
     const userList = userListResponse.data;
+
     return (
       <Layout>
         <div className={styles.headerContainer}>
@@ -78,22 +84,22 @@ const PostsPage = async ({ searchParams }: Properties) => {
           <h1 className={styles.heading}>Post</h1>
           <FilterSearchQuery placeholder="Search Post" />
         </div>
-        {responsePost.data.length > 0 && (
-          <div className={styles.cardContainer}>
-            {responsePost.data.map((item, index) => {
-              const author = userList.find((user) => user.id === item.userId);
-              return <CardPost key={index} data={item} user={author} />;
-            })}
-          </div>
+        {postList.length > 0 && (
+          <ListPosts
+            data={postList}
+            userList={userList}
+            postDetail={postDetail}
+            commentList={commentList}
+          />
         )}
-        {responsePost.data.length === 0 && q && (
+        {postList.length === 0 && q && (
           <EmptyList
             icon={<SearchIcon sx={{ width: 250, height: 250 }} color="error" />}
             title="No Data found"
             description="Please try another post title"
           />
         )}
-        {responsePost.data.length === 0 && !q && (
+        {postList.length === 0 && !q && (
           <EmptyList
             icon={
               <HighlightOffIcon
@@ -103,13 +109,6 @@ const PostsPage = async ({ searchParams }: Properties) => {
             }
             title="No Data found"
             description="Create new post"
-          />
-        )}
-        {postDetail && (
-          <DrawerPostDetail
-            data={postDetail}
-            comments={commentList}
-            userList={userListResponse.data}
           />
         )}
       </Layout>

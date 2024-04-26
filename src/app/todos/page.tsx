@@ -10,7 +10,7 @@ import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import { fetchTodos } from '@/src/service/fetch/todos';
 import EmptyList from '@/src/components/EmptyList';
-import TodoWrapper from './components/TodoWrapper';
+import ListTodos from './components/ListTodos';
 
 const styles = {
   headerContainer: css({
@@ -33,20 +33,16 @@ const TodosPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  const { q, userId } = searchParams;
+  const userId = searchParams?.userId;
+  const q = searchParams?.q;
 
   const [todoResponse, userListResponse] = await Promise.all([
-    fetchTodos({
-      q,
-    }),
+    fetchTodos({ q }),
     fetchUsers(),
   ]);
 
   if (todoResponse.success && userListResponse.success) {
     const todoList = todoResponse.data;
-    const todoListFiltered = todoList
-      .filter((item) => (userId ? item.userId.toString() === userId : true))
-      .sort((a, b) => Number(a.completed) - Number(b.completed));
 
     return (
       <Layout>
@@ -56,8 +52,12 @@ const TodosPage = async ({
           <FilterSearchQuery placeholder="Search Todo" />
         </div>
         {todoList.length > 0 && (
-          <TodoWrapper
-            data={todoListFiltered}
+          <ListTodos
+            data={todoList
+              .filter((item) =>
+                userId ? item.userId.toString() === userId : true,
+              )
+              .sort((a, b) => Number(a.completed) - Number(b.completed))}
             userList={userListResponse.data}
           />
         )}
@@ -65,7 +65,7 @@ const TodosPage = async ({
           <EmptyList
             icon={<SearchIcon sx={{ width: 250, height: 250 }} color="error" />}
             title="No Data found"
-            description="Please try another todo title"
+            description="Please try another todo keyword"
           />
         )}
         {todoList.length === 0 && !searchParams.q && (
