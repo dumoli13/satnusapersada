@@ -20,13 +20,20 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 'base',
-    xl: {
+    lg: {
       marginBottom: 'xl',
     },
   }),
+  headerCtaContainer: css({
+    display: 'flex',
+    gap: 'base',
+  }),
   heading: css({
-    fontSize: '5xl',
+    fontSize: '3xl',
     fontWeight: 'bold',
+    lg: {
+      fontSize: '5xl',
+    },
   }),
   cardContainer: css({
     display: 'grid',
@@ -70,9 +77,11 @@ const AlbumsPage = async ({
       userListResponse.success ? (
         <>
           <div className={styles.headerContainer}>
-            <ButtonAdd userList={userListResponse.data} />
             <h1 className={styles.heading}>Album</h1>
-            <FilterSearchQuery placeholder="Search Album" />
+            <div className={styles.headerCtaContainer}>
+              <ButtonAdd userList={userListResponse.data} />
+              <FilterSearchQuery placeholder="Search Album" />
+            </div>
           </div>
           {albumResponse.data.length > 0 && (
             <ListAlbums

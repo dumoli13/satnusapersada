@@ -40,6 +40,8 @@ const SNPagination = ({ page = 1, count = 1, onChange }: Properties) => {
         color="primary"
         page={page}
         onChange={handlePageChange}
+        siblingCount={0}
+        boundaryCount={1}
       />
     </div>
   );

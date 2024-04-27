@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { MouseEvent, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, Menu } from '@mui/material';
 import { css, cva } from '@/styled-system/css';
 
 const styles = {
@@ -26,11 +28,21 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
   }),
-  menuContainer: css({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 'base',
+  desktopMenuContainer: css({
+    display: 'none',
+    md: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 'base',
+    },
+  }),
+  mobileMenuContainer: css({
+    display: 'block',
+    color: 'primary.40',
+    md: {
+      display: 'none',
+    },
   }),
   overlay: css({
     height: '6xl',
@@ -41,10 +53,16 @@ const styles = {
       py: '5xs',
       px: '2xs',
       borderRadius: 'base',
-      fontSize: 'small',
-      minWidth: '6xl',
       display: 'flex',
-      justifyContent: 'center',
+      margin: '2xs',
+      minWidth: '8xl',
+      justifyContent: 'flex-end',
+      md: {
+        mx: '0',
+        minWidth: '6xl',
+        justifyContent: 'center',
+        fontSize: 'small',
+      },
     },
     variants: {
       selected: {
@@ -63,8 +81,37 @@ const styles = {
   }),
 };
 
+const menuList = [
+  {
+    link: '/posts',
+    label: 'Posts',
+  },
+  {
+    link: '/albums',
+    label: 'Albums',
+  },
+  {
+    link: '/users',
+    label: 'Users',
+  },
+  {
+    link: '/todos',
+    label: 'Todos',
+  },
+];
+
 const Appbar = () => {
   const pathName = usePathname();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <div className={styles.root}>
@@ -75,31 +122,39 @@ const Appbar = () => {
             width={36}
             height={36}
           />
-          <div className={styles.menuContainer}>
-            <Link
-              href="/posts"
-              className={styles.button({ selected: pathName === '/posts' })}
+          <div className={styles.desktopMenuContainer}>
+            {menuList.map((item, index) => (
+              <Link
+                key={index}
+                href={item.link}
+                className={styles.button({ selected: pathName === item.link })}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+          <div className={styles.mobileMenuContainer}>
+            <IconButton onClick={handleClick}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="mobile-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
             >
-              Posts
-            </Link>
-            <Link
-              href="/albums"
-              className={styles.button({ selected: pathName === '/albums' })}
-            >
-              Albums
-            </Link>
-            <Link
-              href="/users"
-              className={styles.button({ selected: pathName === '/users' })}
-            >
-              User
-            </Link>
-            <Link
-              href="/todos"
-              className={styles.button({ selected: pathName === '/todos' })}
-            >
-              Todo
-            </Link>
+              {menuList.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.link}
+                  className={styles.button({
+                    selected: pathName === item.link,
+                  })}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </Menu>
           </div>
         </div>
       </div>
