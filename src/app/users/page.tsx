@@ -21,13 +21,20 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 'base',
-    xl: {
+    lg: {
       marginBottom: 'xl',
     },
   }),
+  headerCtaContainer: css({
+    display: 'flex',
+    gap: 'base',
+  }),
   heading: css({
-    fontSize: '5xl',
+    fontSize: '3xl',
     fontWeight: 'bold',
+    lg: {
+      fontSize: '5xl',
+    },
   }),
   cardContainer: css({
     display: 'grid',
@@ -70,9 +77,11 @@ const UsersPage = async ({
       {response.success ? (
         <>
           <div className={styles.headerContainer}>
-            <ButtonAdd />
             <h1 className={styles.heading}>User</h1>
-            <FilterSearchQuery placeholder="Search User" />
+            <div className={styles.headerCtaContainer}>
+              <ButtonAdd />
+              <FilterSearchQuery placeholder="Search User" />
+            </div>
           </div>
           {response.data.length > 0 && <ListUsers data={response.data} />}
           {response.data.length === 0 && searchParams.q && (

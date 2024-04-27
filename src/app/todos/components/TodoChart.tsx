@@ -61,13 +61,13 @@ const TodoChart = ({ userList, todoList }: Properties) => {
           height={300}
           series={[
             {
-              data: inCompleteData,
+              data: completedData,
               label: 'Completed',
               id: 'completed',
               color: '#039E8B',
             },
             {
-              data: completedData,
+              data: inCompleteData,
               label: 'Incomplete',
               id: 'incomplete',
               color: '#B0030D',

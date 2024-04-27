@@ -9,7 +9,6 @@ import { css } from '@/styled-system/css';
 import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import EmptyList from '@/src/components/EmptyList';
-// import DrawerPostDetail from './components/DrawerPostDetail';
 import { CommentDetail, PostDetail } from '@/src/interface/posts';
 import {
   fetchPostComments,
@@ -28,9 +27,16 @@ const styles = {
       marginBottom: 'xl',
     },
   }),
+  headerCtaContainer: css({
+    display: 'flex',
+    gap: 'base',
+  }),
   heading: css({
-    fontSize: '5xl',
+    fontSize: '3xl',
     fontWeight: 'bold',
+    lg: {
+      fontSize: '5xl',
+    },
   }),
   cardContainer: css({
     display: 'grid',
@@ -80,9 +86,11 @@ const PostsPage = async ({ searchParams }: Properties) => {
     return (
       <Layout>
         <div className={styles.headerContainer}>
-          <ButtonAdd userList={userList} />
           <h1 className={styles.heading}>Post</h1>
-          <FilterSearchQuery placeholder="Search Post" />
+          <div className={styles.headerCtaContainer}>
+            <ButtonAdd userList={userList} />
+            <FilterSearchQuery placeholder="Search Post" />
+          </div>
         </div>
         {postList.length > 0 && (
           <ListPosts

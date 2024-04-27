@@ -18,13 +18,20 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 'base',
-    xl: {
+    lg: {
       marginBottom: 'xl',
     },
   }),
+  headerCtaContainer: css({
+    display: 'flex',
+    gap: 'base',
+  }),
   heading: css({
-    fontSize: '5xl',
+    fontSize: '3xl',
     fontWeight: 'bold',
+    lg: {
+      fontSize: '5xl',
+    },
   }),
 };
 
@@ -37,7 +44,7 @@ const TodosPage = async ({
   const q = searchParams?.q;
 
   const [todoResponse, userListResponse] = await Promise.all([
-    fetchTodos({ q }),
+    fetchTodos({ q, userId }),
     fetchUsers(),
   ]);
 
@@ -47,17 +54,17 @@ const TodosPage = async ({
     return (
       <Layout>
         <div className={styles.headerContainer}>
-          <ButtonAdd userList={userListResponse.data} />
           <h1 className={styles.heading}>Todo</h1>
-          <FilterSearchQuery placeholder="Search Todo" />
+          <div className={styles.headerCtaContainer}>
+            <ButtonAdd userList={userListResponse.data} />
+            <FilterSearchQuery placeholder="Search Todo" />
+          </div>
         </div>
         {todoList.length > 0 && (
           <ListTodos
-            data={todoList
-              .filter((item) =>
-                userId ? item.userId.toString() === userId : true,
-              )
-              .sort((a, b) => Number(a.completed) - Number(b.completed))}
+            data={todoList.sort(
+              (a, b) => Number(a.completed) - Number(b.completed),
+            )}
             userList={userListResponse.data}
           />
         )}
