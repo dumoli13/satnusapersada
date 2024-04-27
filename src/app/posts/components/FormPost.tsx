@@ -21,14 +21,30 @@ interface Properties {
 }
 
 const styles = {
+  root: css({
+    md: {
+      pt: 'base',
+      px: 'xl',
+      gap: 'base',
+    },
+  }),
   container: css({
-    padding: 'base',
-    border: 'neutral',
-    borderRadius: 'base',
     display: 'flex',
     flexDirection: 'column',
-    gap: 'base',
-    mb: 'base',
+    gap: 'xs',
+    py: 'xs',
+    px: 'base',
+    borderBottom: 'neutral',
+    md: {
+      gap: 'base',
+      borderRadius: 'base',
+      border: 'neutral',
+      padding: 'base',
+      mb: 'base',
+      _last: {
+        mb: '0',
+      },
+    },
   }),
   containerTitle: css({
     fontWeight: 'semibold',
@@ -47,6 +63,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'end',
     width: 'full',
+    py: 'xs',
+    px: 'base',
+    md: {
+      py: 'base',
+      px: 'xl',
+    },
   }),
 };
 
@@ -104,40 +126,42 @@ const FormPost = ({ data, userList, onClose }: Properties) => {
   };
 
   return (
-    <div>
-      <div className={styles.container}>
-        <SNTextField
-          id="title"
-          label="Title"
-          placeholder="Enter Title"
-          defaultValue={data?.title}
-          inputRef={inputTitleRef}
-          rules="required"
-        />
-        <SNTextField
-          id="body"
-          label="Body"
-          placeholder="Enter Body"
-          defaultValue={data?.body}
-          inputRef={inputBodyRef}
-          rules="required"
-          multiline
-          rows={3}
-        />
-        <SNAutoCompleteSingle
-          id="author"
-          label="Author"
-          placeholder="Select Author"
-          fullWidth
-          inputRef={inputAuthorRef}
-          defaultValue={
-            data?.userId
-              ? userOption.find((item) => item.id === data.userId)
-              : undefined
-          }
-          rules="required"
-          options={userOption}
-        />
+    <>
+      <div className={styles.root}>
+        <div className={styles.container}>
+          <SNTextField
+            id="title"
+            label="Title"
+            placeholder="Enter Title"
+            defaultValue={data?.title}
+            inputRef={inputTitleRef}
+            rules="required"
+          />
+          <SNTextField
+            id="body"
+            label="Body"
+            placeholder="Enter Body"
+            defaultValue={data?.body}
+            inputRef={inputBodyRef}
+            rules="required"
+            multiline
+            rows={3}
+          />
+          <SNAutoCompleteSingle
+            id="author"
+            label="Author"
+            placeholder="Select Author"
+            fullWidth
+            inputRef={inputAuthorRef}
+            defaultValue={
+              data?.userId
+                ? userOption.find((item) => item.id === data.userId)
+                : undefined
+            }
+            rules="required"
+            options={userOption}
+          />
+        </div>
       </div>
       <div className={styles.ctaContainer}>
         <Button fullWidth variant="contained" onClick={handleSubmit}>
@@ -168,7 +192,7 @@ const FormPost = ({ data, userList, onClose }: Properties) => {
           {snackbarFailed}
         </Alert>
       </Snackbar>
-    </div>
+    </>
   );
 };
 

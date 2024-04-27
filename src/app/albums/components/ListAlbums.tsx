@@ -4,11 +4,15 @@ import { useState } from 'react';
 import { Skeleton } from '@mui/material';
 import dynamic from 'next/dynamic';
 import { UserDetail } from '@/src/interface/users';
-import ListUsers from './ListUsers';
 import { AlbumDetail } from '@/src/interface/albums';
 import SNPagination from '@/src/components/SNPagination';
 import { PhotoDetail } from '@/src/interface/photos';
 import { css } from '@/styled-system/css';
+import { SkeletonListUser } from '@/src/components/ListUsers';
+
+const ListUsers = dynamic(() => import('@/src/components/ListUsers'), {
+  loading: () => <SkeletonListUser />,
+});
 
 const DrawerAlbumDetail = dynamic(() => import('./DrawerAlbumDetail'));
 
@@ -47,7 +51,7 @@ const ListAlbums = ({
 
   return (
     <>
-      <ListUsers userList={userList} />
+      <ListUsers data={userList} />
       <div className={styles.cardContainer}>
         {data.slice((page - 1) * limit, page * limit).map((item, index) => (
           <CardAlbum

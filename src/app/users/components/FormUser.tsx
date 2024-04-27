@@ -16,14 +16,30 @@ interface Properties {
 }
 
 const styles = {
+  root: css({
+    md: {
+      pt: 'base',
+      px: 'xl',
+      gap: 'base',
+    },
+  }),
   container: css({
-    padding: 'base',
-    border: 'neutral',
-    borderRadius: 'base',
     display: 'flex',
     flexDirection: 'column',
-    gap: 'base',
-    mb: 'base',
+    gap: 'xs',
+    py: 'xs',
+    px: 'base',
+    borderBottom: 'neutral',
+    md: {
+      gap: 'base',
+      borderRadius: 'base',
+      border: 'neutral',
+      padding: 'base',
+      mb: 'base',
+      _last: {
+        mb: '0',
+      },
+    },
   }),
   containerTitle: css({
     fontWeight: 'semibold',
@@ -42,6 +58,12 @@ const styles = {
     display: 'flex',
     justifyContent: 'end',
     width: 'full',
+    py: 'xs',
+    px: 'base',
+    md: {
+      py: 'base',
+      px: 'xl',
+    },
   }),
 };
 
@@ -134,139 +156,141 @@ const FormUser = ({ data, onClose }: Properties) => {
   };
 
   return (
-    <div>
-      <div className={styles.container}>
-        <SNTextField
-          id="name"
-          label="Full Name"
-          placeholder="Enter full name"
-          defaultValue={data?.name}
-          inputRef={inputFullNameRef}
-          rules="required"
-        />
-        <div className={styles.halfField}>
+    <>
+      <div className={styles.root}>
+        <div className={styles.container}>
           <SNTextField
-            id="email"
-            label="Email"
-            placeholder="Enter Email"
-            defaultValue={data?.email}
-            inputRef={inpuEmailRef}
-            rules={['required', 'email']}
-          />
-          <SNTextField
-            id="phone"
-            label="Phone"
-            placeholder="Enter Phone Number"
-            defaultValue={data?.phone}
-            inputRef={inputPhoneRef}
+            id="name"
+            label="Full Name"
+            placeholder="Enter full name"
+            defaultValue={data?.name}
+            inputRef={inputFullNameRef}
             rules="required"
           />
+          <div className={styles.halfField}>
+            <SNTextField
+              id="email"
+              label="Email"
+              placeholder="Enter Email"
+              defaultValue={data?.email}
+              inputRef={inpuEmailRef}
+              rules={['required', 'email']}
+            />
+            <SNTextField
+              id="phone"
+              label="Phone"
+              placeholder="Enter Phone Number"
+              defaultValue={data?.phone}
+              inputRef={inputPhoneRef}
+              rules="required"
+            />
+          </div>
+          <div className={styles.halfField}>
+            <SNTextField
+              id="userName"
+              label="Username"
+              placeholder="Enter Username"
+              defaultValue={data?.username}
+              inputRef={inputUsernameRef}
+              rules="required"
+              fullWidth
+            />
+            <SNTextField
+              id="website"
+              label="Website"
+              placeholder="Enter Website"
+              defaultValue={data?.website}
+              inputRef={inputWebsiteRef}
+              fullWidth
+              rules="url"
+            />
+          </div>
         </div>
-        <div className={styles.halfField}>
+        <div className={styles.container}>
+          <p className={styles.containerTitle}>Company</p>
           <SNTextField
-            id="userName"
-            label="Username"
-            placeholder="Enter Username"
-            defaultValue={data?.username}
-            inputRef={inputUsernameRef}
+            id="companyName"
+            label="Company Name"
+            placeholder="Enter Company Name"
+            defaultValue={data?.company.name}
+            inputRef={inputCompanynameRef}
             rules="required"
-            fullWidth
           />
-          <SNTextField
-            id="website"
-            label="Website"
-            placeholder="Enter Website"
-            defaultValue={data?.website}
-            inputRef={inputWebsiteRef}
-            fullWidth
-            rules="url"
-          />
+          <div className={styles.halfField}>
+            <SNTextField
+              id="companyCatchPhrase"
+              label="Company Catch Phrase"
+              placeholder="Enter Company CatPhrase"
+              defaultValue={data?.company.catchPhrase}
+              inputRef={inputCompanyCatchPhraseRef}
+              rules="required"
+            />
+            <SNTextField
+              id="companyBs"
+              label="Company Bs"
+              placeholder="Enter Company Bs"
+              defaultValue={data?.company.bs}
+              inputRef={inputCompanyBsRef}
+              rules="required"
+            />
+          </div>
         </div>
-      </div>
-      <div className={styles.container}>
-        <p className={styles.containerTitle}>Company</p>
-        <SNTextField
-          id="companyName"
-          label="Company Name"
-          placeholder="Enter Company Name"
-          defaultValue={data?.company.name}
-          inputRef={inputCompanynameRef}
-          rules="required"
-        />
-        <div className={styles.halfField}>
-          <SNTextField
-            id="companyCatchPhrase"
-            label="Company Catch Phrase"
-            placeholder="Enter Company CatPhrase"
-            defaultValue={data?.company.catchPhrase}
-            inputRef={inputCompanyCatchPhraseRef}
-            rules="required"
-          />
-          <SNTextField
-            id="companyBs"
-            label="Company Bs"
-            placeholder="Enter Company Bs"
-            defaultValue={data?.company.bs}
-            inputRef={inputCompanyBsRef}
-            rules="required"
-          />
-        </div>
-      </div>
-      <div className={styles.container}>
-        <p className={styles.containerTitle}>Address</p>
-        <div className={styles.halfField}>
-          <SNTextField
-            id="addressStreet"
-            label="Street"
-            placeholder="Enter Street Name"
-            defaultValue={data?.address.street}
-            inputRef={inputAddressStreetRef}
-            rules="required"
-          />
-          <SNTextField
-            id="addressSuite"
-            label="Suite"
-            placeholder="Enter Suite"
-            defaultValue={data?.address.suite}
-            inputRef={inputAddressSuiteRef}
-            rules="required"
-          />
-        </div>
-        <div className={styles.halfField}>
-          <SNTextField
-            id="addressCity"
-            label="City"
-            placeholder="Enter City Name"
-            defaultValue={data?.address.city}
-            inputRef={inputAddressCityRef}
-            rules="required"
-          />
-          <SNTextField
-            id="addressZip"
-            label="Zip Code"
-            placeholder="Enter Zip Code"
-            defaultValue={data?.address.zipcode}
-            inputRef={inputAddressZipcodeRef}
-            rules="required"
-          />
-        </div>
-        <div className={styles.halfField}>
-          <SNTextField
-            id="addressLatitude"
-            label="Latitude"
-            placeholder="Enter Map Latitude Coordinate"
-            defaultValue={data?.address.geo.lat}
-            inputRef={inputAddressLatRef}
-            rules="required"
-          />
-          <SNTextField
-            id="addressLongitude"
-            label="Longitude"
-            placeholder="Enter Map Longitude Coordinate"
-            defaultValue={data?.address.geo.lng}
-            inputRef={inputAddressLngRef}
-            rules="required"
-          />
+        <div className={styles.container}>
+          <p className={styles.containerTitle}>Address</p>
+          <div className={styles.halfField}>
+            <SNTextField
+              id="addressStreet"
+              label="Street"
+              placeholder="Enter Street Name"
+              defaultValue={data?.address.street}
+              inputRef={inputAddressStreetRef}
+              rules="required"
+            />
+            <SNTextField
+              id="addressSuite"
+              label="Suite"
+              placeholder="Enter Suite"
+              defaultValue={data?.address.suite}
+              inputRef={inputAddressSuiteRef}
+              rules="required"
+            />
+          </div>
+          <div className={styles.halfField}>
+            <SNTextField
+              id="addressCity"
+              label="City"
+              placeholder="Enter City Name"
+              defaultValue={data?.address.city}
+              inputRef={inputAddressCityRef}
+              rules="required"
+            />
+            <SNTextField
+              id="addressZip"
+              label="Zip Code"
+              placeholder="Enter Zip Code"
+              defaultValue={data?.address.zipcode}
+              inputRef={inputAddressZipcodeRef}
+              rules="required"
+            />
+          </div>
+          <div className={styles.halfField}>
+            <SNTextField
+              id="addressLatitude"
+              label="Latitude"
+              placeholder="Enter Map Latitude Coordinate"
+              defaultValue={data?.address.geo.lat}
+              inputRef={inputAddressLatRef}
+              rules="required"
+            />
+            <SNTextField
+              id="addressLongitude"
+              label="Longitude"
+              placeholder="Enter Map Longitude Coordinate"
+              defaultValue={data?.address.geo.lng}
+              inputRef={inputAddressLngRef}
+              rules="required"
+            />
+          </div>
         </div>
       </div>
       <div className={styles.ctaContainer}>
@@ -298,7 +322,7 @@ const FormUser = ({ data, onClose }: Properties) => {
           {snackbarFailed}
         </Alert>
       </Snackbar>
-    </div>
+    </>
   );
 };
 

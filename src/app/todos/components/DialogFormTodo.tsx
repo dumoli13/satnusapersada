@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogContent } from '@mui/material';
+import { Dialog } from '@mui/material';
 import DialogHeader from '@/src/components/DialogHeader';
 import FormTodo from './FormTodos';
 import { TodoDetail } from '@/src/interface/todos';
@@ -15,9 +15,7 @@ interface Properties {
 const DialogFormTodo = ({ open, data, onClose, userList }: Properties) => (
   <Dialog open={open} onClose={onClose} fullWidth>
     <DialogHeader title={data ? 'Edit Todos' : 'Add Todos'} onClose={onClose} />
-    <DialogContent>
-      <FormTodo data={data} onClose={onClose} userList={userList} />
-    </DialogContent>
+    <FormTodo data={data} onClose={onClose} userList={userList} />
   </Dialog>
 );
 

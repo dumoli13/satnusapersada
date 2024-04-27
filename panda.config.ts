@@ -283,6 +283,7 @@ export const preset = definePreset({
         '100vw': { value: '100vw' },
         'modal-width': { value: '600px' },
         'desktop-container': { value: '1280px' },
+        'min-content': { value: 'min-content' },
       },
       radii: {
         none: { value: 'none' },
