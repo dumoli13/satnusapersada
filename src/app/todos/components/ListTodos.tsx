@@ -7,14 +7,14 @@ import SNPagination from '@/src/components/SNPagination';
 import { TodoDetail } from '@/src/interface/todos';
 import { UserDetail } from '@/src/interface/users';
 import { css } from '@/styled-system/css';
-import { SkeletonListUser } from './ListUser';
+import { SkeletonListUser } from '@/src/components/ListUsers';
+
+const ListUsers = dynamic(() => import('@/src/components/ListUsers'), {
+  loading: () => <SkeletonListUser />,
+});
 
 const CardTodo = dynamic(() => import('./CardTodo'), {
   loading: () => <Skeleton variant="rounded" width="100%" height={158} />,
-});
-
-const ListUser = dynamic(() => import('./ListUser'), {
-  loading: () => <SkeletonListUser />,
 });
 
 const TodoChart = dynamic(() => import('./TodoChart'), {
@@ -49,7 +49,7 @@ const ListTodos = ({ data, userList }: Properties) => {
   return (
     <>
       <TodoChart todoList={data} userList={userList} />
-      <ListUser userList={userList} />
+      <ListUsers data={userList} />
       <div className={styles.cardContainer}>
         {slicedData.map((item, index) => (
           <CardTodo key={index} data={item} userList={userList} />

@@ -44,6 +44,9 @@ const styles = {
       display: 'none',
     },
   }),
+  mobileListContainer: css({
+    mx: 'small',
+  }),
   overlay: css({
     height: '6xl',
     width: 'full',
@@ -54,11 +57,10 @@ const styles = {
       px: '2xs',
       borderRadius: 'base',
       display: 'flex',
-      margin: '2xs',
+      my: '2xs',
       minWidth: '8xl',
       justifyContent: 'flex-end',
       md: {
-        mx: '0',
         minWidth: '6xl',
         justifyContent: 'center',
         fontSize: 'small',
@@ -143,17 +145,19 @@ const Appbar = () => {
               open={open}
               onClose={handleClose}
             >
-              {menuList.map((item, index) => (
-                <Link
-                  key={index}
-                  href={item.link}
-                  className={styles.button({
-                    selected: pathName === item.link,
-                  })}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              <div className={styles.mobileListContainer}>
+                {menuList.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={item.link}
+                    className={styles.button({
+                      selected: pathName === item.link,
+                    })}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
             </Menu>
           </div>
         </div>

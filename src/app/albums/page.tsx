@@ -117,15 +117,6 @@ const AlbumsPage = async ({
               description="Create new album"
             />
           )}
-          {/* {albumDetail && (
-            <DrawerAlbumDetail
-              data={albumDetail}
-              photos={photoResponse.data.filter(
-                (photo) => id === photo.albumId.toString(),
-              )}
-              userList={userListResponse.data}
-            />
-          )} */}
         </>
       ) : (
         <ErrorFetchingPage />
