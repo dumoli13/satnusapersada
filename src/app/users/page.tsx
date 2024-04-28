@@ -1,13 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import SearchIcon from '@mui/icons-material/Search';
 import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUserDetail, fetchUsers } from '@/src/service/fetch/users';
 import { css } from '@/styled-system/css';
 import ButtonAdd from './components/ButtonAdd';
-import DrawerUserDetail from './components/DrawerUserDetail';
 import { UserDetail } from '@/src/interface/users';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import { TodoDetail } from '@/src/interface/todos';
@@ -48,72 +45,64 @@ const styles = {
     },
   }),
 };
+
 const UsersPage = async ({
   searchParams,
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
+  const id = searchParams?.id;
   const q = searchParams?.q;
+
   const response = await fetchUsers({
     q,
   });
 
-  let userDetail: UserDetail | null = null;
-  let userTodos: TodoDetail[] | null = null;
-  if (searchParams.id) {
-    const userDetailReponse = await fetchUserDetail(searchParams.id);
-    if (userDetailReponse.success) {
-      userDetail = userDetailReponse.data;
+  if (response.success) {
+    const userList = response.data;
+
+    let userDetail: UserDetail | null = null;
+    let userTodos: TodoDetail[] | null = null;
+    if (id) {
+      const userDetailReponse = await fetchUserDetail(id);
+      if (userDetailReponse.success) {
+        userDetail = userDetailReponse.data;
+      }
+
+      const userTodosReponse = await fetchTodos({ userId: searchParams.id });
+      if (userTodosReponse.success) {
+        userTodos = userTodosReponse.data;
+      }
     }
 
-    const userTodosReponse = await fetchTodos({ userId: searchParams.id });
-    if (userTodosReponse.success) {
-      userTodos = userTodosReponse.data;
-    }
-  }
-
-  return (
-    <Layout>
-      {response.success ? (
-        <>
-          <div className={styles.headerContainer}>
-            <h1 className={styles.heading}>User</h1>
-            <div className={styles.headerCtaContainer}>
-              <ButtonAdd />
-              <FilterSearchQuery placeholder="Search User" />
-            </div>
+    return (
+      <Layout>
+        <div className={styles.headerContainer}>
+          <h1 className={styles.heading}>User</h1>
+          <div className={styles.headerCtaContainer}>
+            <ButtonAdd />
+            <FilterSearchQuery placeholder="Search User" />
           </div>
-          {response.data.length > 0 && <ListUsers data={response.data} />}
-          {response.data.length === 0 && searchParams.q && (
-            <EmptyList
-              icon={
-                <SearchIcon sx={{ width: 250, height: 250 }} color="error" />
-              }
-              title="No Data found"
-              description="Please try another user name"
-            />
-          )}
-          {response.data.length === 0 && !searchParams.q && (
-            <EmptyList
-              icon={
-                <HighlightOffIcon
-                  sx={{ width: 250, height: 250 }}
-                  color="error"
-                />
-              }
-              title="No Data found"
-              description="Create new user"
-            />
-          )}
-          {userDetail && (
-            <DrawerUserDetail data={userDetail} todos={userTodos} />
-          )}
-        </>
-      ) : (
-        <ErrorFetchingPage />
-      )}
-    </Layout>
-  );
+        </div>
+        {userList.length > 0 ? (
+          <ListUsers
+            userList={userList}
+            userDetail={userDetail}
+            userTodos={userTodos}
+          />
+        ) : (
+          <EmptyList
+            title="No data found"
+            isSearching={q != null}
+            description={
+              q ? 'Please try another user keyword' : 'Create new user'
+            }
+          />
+        )}
+      </Layout>
+    );
+  }
+  return <ErrorFetchingPage />;
 };
 
 export default UsersPage;

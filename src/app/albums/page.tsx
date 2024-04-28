@@ -1,7 +1,5 @@
 import React from 'react';
 import { Metadata } from 'next';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import SearchIcon from '@mui/icons-material/Search';
 import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUsers } from '@/src/service/fetch/users';
@@ -44,6 +42,7 @@ const styles = {
     },
   }),
 };
+
 const AlbumsPage = async ({
   searchParams,
 }: {
@@ -53,76 +52,62 @@ const AlbumsPage = async ({
   const q = searchParams?.q;
   const id = searchParams?.id;
 
-  const [albumResponse, photoResponse] = await Promise.all([
-    fetchAlbums({
-      q,
-      userId,
-    }),
+  const [albumResponse, photoResponse, userListResponse] = await Promise.all([
+    fetchAlbums({ q, userId }),
     fetchPhotos(),
+    fetchUsers(),
   ]);
-  const userListResponse = await fetchUsers();
 
-  let albumDetail: AlbumDetail | null = null;
-  if (searchParams.id) {
-    const userDetailReponse = await fetchAlbumDetail(searchParams.id);
-    if (userDetailReponse.success) {
-      albumDetail = userDetailReponse.data;
+  if (
+    albumResponse.success &&
+    photoResponse.success &&
+    userListResponse.success
+  ) {
+    const albumList = albumResponse.data;
+
+    let albumDetail: AlbumDetail | null = null;
+    if (id) {
+      const userDetailReponse = await fetchAlbumDetail(id);
+      if (userDetailReponse.success) {
+        albumDetail = userDetailReponse.data;
+      }
     }
+
+    return (
+      <Layout>
+        <div className={styles.headerContainer}>
+          <h1 className={styles.heading}>Album</h1>
+          <div className={styles.headerCtaContainer}>
+            <ButtonAdd userList={userListResponse.data} />
+            <FilterSearchQuery placeholder="Search Album" />
+          </div>
+        </div>
+        {albumList.length > 0 ? (
+          <ListAlbums
+            data={albumList.filter((item) =>
+              userId && !Number.isNaN(userId)
+                ? item.userId === parseInt(userId, 10)
+                : true,
+            )}
+            photoList={photoResponse.data}
+            userList={userListResponse.data}
+            albumDetail={albumDetail}
+            selectedId={id}
+          />
+        ) : (
+          <EmptyList
+            title="No data found"
+            isSearching={q != null}
+            description={
+              q ? 'Please try another album keyword' : 'Create new album'
+            }
+          />
+        )}
+      </Layout>
+    );
   }
 
-  return (
-    <Layout>
-      {albumResponse.success &&
-      photoResponse.success &&
-      userListResponse.success ? (
-        <>
-          <div className={styles.headerContainer}>
-            <h1 className={styles.heading}>Album</h1>
-            <div className={styles.headerCtaContainer}>
-              <ButtonAdd userList={userListResponse.data} />
-              <FilterSearchQuery placeholder="Search Album" />
-            </div>
-          </div>
-          {albumResponse.data.length > 0 && (
-            <ListAlbums
-              data={albumResponse.data.filter((item) =>
-                userId && !Number.isNaN(userId)
-                  ? item.userId === parseInt(userId, 10)
-                  : true,
-              )}
-              photoList={photoResponse.data}
-              userList={userListResponse.data}
-              albumDetail={albumDetail}
-              selectedId={id}
-            />
-          )}
-          {albumResponse.data.length === 0 && q && (
-            <EmptyList
-              icon={
-                <SearchIcon sx={{ width: 250, height: 250 }} color="error" />
-              }
-              title="No Data found"
-              description="Please try another album title"
-            />
-          )}
-          {albumResponse.data.length === 0 && !q && (
-            <EmptyList
-              icon={
-                <HighlightOffIcon
-                  sx={{ width: 250, height: 250 }}
-                  color="error"
-                />
-              }
-              title="No Data found"
-              description="Create new album"
-            />
-          )}
-        </>
-      ) : (
-        <ErrorFetchingPage />
-      )}
-    </Layout>
-  );
+  return <ErrorFetchingPage />;
 };
 
 export default AlbumsPage;

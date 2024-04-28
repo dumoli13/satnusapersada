@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DialogFormUser from './DialogFormUser';
+import dynamic from 'next/dynamic';
+
+const DialogFormUser = dynamic(() => import('./DialogFormUser'));
 
 const ButtonAdd = () => {
   const [openModal, setOpenModal] = useState(false);

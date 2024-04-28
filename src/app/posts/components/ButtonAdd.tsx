@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import dynamic from 'next/dynamic';
 import { UserDetail } from '@/src/interface/users';
-import DialogFormPost from './DialogFormPost';
+
+const DialogFormPost = dynamic(() => import('./DialogFormPost'));
 
 interface Properties {
   userList: UserDetail[];

@@ -1,7 +1,5 @@
 import React from 'react';
 import { Metadata } from 'next';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import SearchIcon from '@mui/icons-material/Search';
 import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUsers } from '@/src/service/fetch/users';
@@ -50,52 +48,37 @@ const TodosPage = async ({
 
   if (todoResponse.success && userListResponse.success) {
     const todoList = todoResponse.data;
+    const userList = userListResponse.data;
 
     return (
       <Layout>
         <div className={styles.headerContainer}>
           <h1 className={styles.heading}>Todo</h1>
           <div className={styles.headerCtaContainer}>
-            <ButtonAdd userList={userListResponse.data} />
+            <ButtonAdd userList={userList} />
             <FilterSearchQuery placeholder="Search Todo" />
           </div>
         </div>
-        {todoList.length > 0 && (
+        {todoList.length > 0 ? (
           <ListTodos
             data={todoList.sort(
               (a, b) => Number(a.completed) - Number(b.completed),
             )}
-            userList={userListResponse.data}
+            userList={userList}
           />
-        )}
-        {todoList.length === 0 && searchParams.q && (
+        ) : (
           <EmptyList
-            icon={<SearchIcon sx={{ width: 250, height: 250 }} color="error" />}
-            title="No Data found"
-            description="Please try another todo keyword"
-          />
-        )}
-        {todoList.length === 0 && !searchParams.q && (
-          <EmptyList
-            icon={
-              <HighlightOffIcon
-                sx={{ width: 250, height: 250 }}
-                color="error"
-              />
+            title="No data found"
+            isSearching={q != null}
+            description={
+              q ? 'Please try another todo keyword' : 'Create new todo'
             }
-            title="No Data found"
-            description="Create new todo"
           />
         )}
       </Layout>
     );
   }
-
-  return (
-    <Layout>
-      <ErrorFetchingPage />
-    </Layout>
-  );
+  return <ErrorFetchingPage />;
 };
 
 export default TodosPage;

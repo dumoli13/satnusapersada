@@ -1,11 +1,12 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
+import SearchIcon from '@mui/icons-material/Search';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { css } from '@/styled-system/css';
 
 interface Properties {
-  icon: ReactNode;
   title: string;
   description: string;
-  cta?: ReactNode;
+  isSearching?: boolean;
 }
 
 const styles = {
@@ -18,21 +19,29 @@ const styles = {
   }),
   title: css({
     textAlign: 'center',
-    fontSize: 'base',
+    fontSize: 'large',
     fontWeight: 'medium',
   }),
   descrripition: css({
     textAlign: 'center',
     fontSize: 'small',
   }),
+  icon: css({
+    width: '16xl!',
+    height: '16xl!',
+    color: 'error.40',
+  }),
 };
 
-const EmptyList = ({ icon, title, description, cta }: Properties) => (
+const EmptyList = ({ title, description, isSearching = false }: Properties) => (
   <div className={styles.root}>
-    {icon}
+    {isSearching ? (
+      <SearchIcon className={styles.icon} />
+    ) : (
+      <HighlightOffIcon className={styles.icon} />
+    )}
     <p className={styles.title}>{title}</p>
     <p className={styles.descrripition}>{description}</p>
-    {cta}
   </div>
 );
 
