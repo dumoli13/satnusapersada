@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import dynamic from 'next/dynamic';
 import { UserDetail } from '@/src/interface/users';
-import DialogFormAlbum from './DialogFormAlbum';
+
+const DialogFormAlbum = dynamic(() => import('./DialogFormAlbum'));
 
 interface Properties {
   userList: UserDetail[];

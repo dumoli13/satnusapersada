@@ -1,12 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import SearchIcon from '@mui/icons-material/Search';
 import ErrorFetchingPage from '@/src/components/ErrorFetchingPage';
 import Layout from '@/src/components/Layout';
 import { fetchUsers } from '@/src/service/fetch/users';
 import { css } from '@/styled-system/css';
-import ButtonAdd from './components/ButtonAdd';
 import FilterSearchQuery from '@/src/components/FilterSearchQuery';
 import EmptyList from '@/src/components/EmptyList';
 import { CommentDetail, PostDetail } from '@/src/interface/posts';
@@ -16,6 +13,7 @@ import {
   fetchPosts,
 } from '@/src/service/fetch/posts';
 import ListPosts from './components/ListPosts';
+import ButtonAdd from './components/ButtonAdd';
 
 const styles = {
   headerContainer: css({
@@ -51,37 +49,38 @@ const styles = {
   }),
 };
 
-interface Properties {
+const PostsPage = async ({
+  searchParams,
+}: {
   searchParams?: { [key: string]: string | undefined };
-}
-
-const PostsPage = async ({ searchParams }: Properties) => {
+}) => {
   const id = searchParams?.id;
   const q = searchParams?.q;
-  const postResponse = await fetchPosts({
-    q,
-  });
-  const userListResponse = await fetchUsers();
 
-  let postDetail: PostDetail | null = null;
-  let commentList: Array<CommentDetail> = [];
-  if (id) {
-    const [postDetailResponse, commentListResponse] = await Promise.all([
-      fetchPostDetail(id),
-      fetchPostComments(id),
-    ]);
-
-    if (postDetailResponse.success) {
-      postDetail = postDetailResponse.data;
-    }
-    if (commentListResponse.success) {
-      commentList = commentListResponse.data;
-    }
-  }
+  const [postResponse, userListResponse] = await Promise.all([
+    fetchPosts({ q }),
+    fetchUsers(),
+  ]);
 
   if (postResponse.success && userListResponse.success) {
     const postList = postResponse.data;
     const userList = userListResponse.data;
+
+    let postDetail: PostDetail | null = null;
+    let commentList: Array<CommentDetail> = [];
+    if (id) {
+      const [postDetailResponse, commentListResponse] = await Promise.all([
+        fetchPostDetail(id),
+        fetchPostComments(id),
+      ]);
+
+      if (postDetailResponse.success) {
+        postDetail = postDetailResponse.data;
+      }
+      if (commentListResponse.success) {
+        commentList = commentListResponse.data;
+      }
+    }
 
     return (
       <Layout>
@@ -92,41 +91,27 @@ const PostsPage = async ({ searchParams }: Properties) => {
             <FilterSearchQuery placeholder="Search Post" />
           </div>
         </div>
-        {postList.length > 0 && (
+        {postList.length > 0 ? (
           <ListPosts
             data={postList}
             userList={userList}
             postDetail={postDetail}
             commentList={commentList}
           />
-        )}
-        {postList.length === 0 && q && (
+        ) : (
           <EmptyList
-            icon={<SearchIcon sx={{ width: 250, height: 250 }} color="error" />}
-            title="No Data found"
-            description="Please try another post title"
-          />
-        )}
-        {postList.length === 0 && !q && (
-          <EmptyList
-            icon={
-              <HighlightOffIcon
-                sx={{ width: 250, height: 250 }}
-                color="error"
-              />
+            title="No data found"
+            isSearching={q != null}
+            description={
+              q ? 'Please try another post keyword' : 'Create new post'
             }
-            title="No Data found"
-            description="Create new post"
           />
         )}
       </Layout>
     );
   }
-  return (
-    <Layout>
-      <ErrorFetchingPage />
-    </Layout>
-  );
+
+  return <ErrorFetchingPage />;
 };
 
 export default PostsPage;
